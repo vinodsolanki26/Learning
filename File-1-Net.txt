@@ -1,0 +1,1728 @@
+
+------------------------------------------------------------------------------------------------
+ Which class is super class of all classes in .NET Classes?
+------------------------------------------------------------------------------------------------
+ 
+Object class (System.Object) is the base class of .NET Classes
+
+
+------------------------------------------------------------------------------------------------
+ What is the execution entry point for a C# console application?
+------------------------------------------------------------------------------------------------
+The Main method is the execution entry point of C# console application.
+static void main(string args[])
+{
+}
+
+------------------------------------------------------------------------------------------------
+Yield Keyword in C#
+------------------------------------------------------------------------------------------------
+
+“Yield keyword helps us to do custom stateful iteration over .NET collections.”
+
+-In other words, when using the "yield return" statement inside an iterator, you need not create a temporary collection to store data before it returned. 
+
+example- The following code snippet illustrates how the yield keyword can be used to return a Fibonacci number. 
+The method accepts an integer as argument that represents the count of the Fibonacci numbers to generate.
+
+       static IEnumerable<int> GenerateFibonacciNumbers(int n)
+       {
+           for (int i = 0, j = 0, k = 1; i < n; i++)
+          {
+
+               yield return j;
+
+               int temp = j + k;
+               j = k;
+               k = temp;
+           }
+       }
+
+As shown in the code snippet above, the statement “yield return j;” returns Fibonacci numbers one by one without exiting the “for” loop.
+
+	foreach (int x in GenerateFibonacciNumbers(10))
+	{
+       		Console.WriteLine(x);
+	}
+
+As you can notice, there is no need of creating an intermediate list or array to hold the fibonacci numbers that need to be generated and returned to the caller.
+
+
+Points to remember :::
+----------------------
+1. You cannot have the yield return statement in a try-catch block though you can have it inside a try-finally block.
+2. The return type of the method where yield has been used, should be IEnumerable, IEnumerable<T>, IEnumerator, or IEnumerator<T>
+3. You cannot have a ref or out parameter in your method in which yield has been used.
+
+
+------------------------------------------------------------------------------------------------
+ What is a Jagged Array?
+------------------------------------------------------------------------------------------------
+
+Ans: A Jagged array is an array whose elements are arrays. It is also called as the array of arrays. It can be either single or multiple dimensions.
+
+int[] jaggedArray = new int[4][];
+
+------------------------------------------------------------------------------------------------
+SOLID Design Principles
+------------------------------------------------------------------------------------------------
+
+SOLID Principles ::
+
+There are five SOLID principles:
+
+Single Responsibility Principle (SRP)
+
+Open Closed Principle (OCP)
+
+Liskov Substitution Principle (LSP)
+
+Interface Segregation Principle (ISP)
+
+Dependency Inversion Principle (DIP)
+
+
+1. (SRP)
+Definition: A class should have only one reason to change.
+this means that a class should not be loaded with multiple responsibilities and a single responsibility should not be spread across multiple classes.
+
+2. (OCP)
+Definition: Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.
+This principle suggests that the class should be easily extended but there is no need to change its core implementations.
+
+i.e. New features should be implemented using the new code, but not by changing existing code. The main benefit of adhering 
+to OCP is that it potentially streamlines code maintenance and reduces the risk of breaking the existing implementation.
+
+3. (LSP)
+LSP is a fundamental principle of SOLID Principles and states that if program or module is using base class then derived class should 
+be able to extend their base class without changing their original implementation
+
+4. (ISP)
+Definition: No client should be forced to implement methods which it does not use, and the contracts should be broken down to thin ones.
+
+Using ISP, we can create separate interfaces for each operation or requirement rather than having a single class to do the same work.
+
+When all the tasks are done by a single class or in other words, one class is used in almost all the application classes then it has become a 
+fat class with overburden. 
+
+Inheriting such class will results in having sharing methods which are not relevant to derived classes but its there in the base 
+class so that will inherit in the derived class.
+
+
+5. (DIP)
+High-level modules should not depend on low-level modules. Both should depend on abstractions.
+
+Abstractions should not depend on details. Details should depend on abstractions.
+
+In simple words, the principle says that there should not be a tight coupling among components of 
+software and to avoid that, the components should depend on abstraction.
+
+Inversion of Control (IoC) is a technique to implement the Dependency Inversion Principle in C#. Inversion of control can be 
+implemented using either an abstract class or interface.
+
+------------------------------------------------------------------------------------------------
+-::: C# | Encapsulation :::-
+------------------------------------------------------------------------------------------------
+
+
+Encapsulation is defined as the wrapping up of data under a single unit.
+
+encapsulation is a protective shield that prevents the data from being accessed by the code outside this shield.
+
+- As in encapsulation, the data in a class is hidden from other classes, so it is also known as data-hiding.
+
+- Encapsulation can be achieved by: Declaring all the variables in the class as private and using C# Properties 
+in the class to set and get the values of variables.
+
+
+public class DemoEncap { 
+      
+    // private variables declared 
+    // these can only be accessed by 
+    // public methods of class 
+    private String studentName; 
+    private int studentAge; 
+      
+    // using accessors to get and  
+    // set the value of studentName 
+    public String Name 
+    { 
+          
+        get { return studentName;} 
+          
+        set { studentName = value;} 
+          
+    } 
+      
+    // using accessors to get and  
+    // set the value of studentAge 
+    public int Age 
+    { 
+        get { return studentAge; } 
+          
+        set { studentAge = value; } 
+          
+    } 
+} 
+
+
+Advantages of Encapsulation:
+
+- Data Hiding: The user will have no idea about the inner implementation of the class. 
+It will not be visible to the user that how the class is stored values in the variables. He only knows that we are passing the values to accessors 
+and variables are getting initialized to that value.
+
+- Increased Flexibility: We can make the variables of the class as read-only or write-only depending on our requirement. 
+If we wish to make the variables as read-only then we have to only use Get Accessor in the code. If we wish to make the variables as write-only 
+then we have to only use Set Accessor.
+
+- Reusability: Encapsulation also improves the re-usability and easy to change with new requirements.
+
+- Testing code is easy: Encapsulated code is easy to test for unit testing.
+  
+
+
+------------------------------------------------------------------------------------------------
+-::: C# | Abstraction :::-
+------------------------------------------------------------------------------------------------
+
+
+Data Abstraction may also be defined as the process of identifying only the required characteristics of an object ignoring the irrelevant details. 
+
+
+Abstract Classes
+
+An abstract class is declared with the help of abstract keyword.
+In C#, you are not allowed to create objects of the abstract class. Or in other words, you cannot use the abstract class directly with the new operator.
+Class that contains the abstract keyword with some of its methods(not all abstract method) is known as an Abstract Base Class.
+Class that contains the abstract keyword with all of its methods is known as pure Abstract Base Class.
+You are not allowed to declare the abstract methods outside the abstract class.
+You are not allowed to declare abstract class as Sealed Class.
+
+
+
+Example: Consider a real-life scenario of withdrawing money from ATM. The user only knows that in ATM machine first enter ATM card, 
+then enter the pin code of ATM card, and then enter the amount which he/she wants to withdraw and at last, he/she gets their money. 
+The user does not know about the inner mechanism of the ATM or the implementation of withdrawing money etc. 
+The user just simply know how to operate the ATM machine, this is called abstraction.
+
+
+------------------------------------------------------------------------------------------------
+-::: Encapsulation vs Data Abstraction :::-
+------------------------------------------------------------------------------------------------
+
+Encapsulation is data hiding(information hiding) while Abstraction is detail hiding(implementation hiding).
+While encapsulation groups together data and methods that act upon the data, data abstraction deals with exposing to the user and hiding the 
+details of implementation.
+
+
+
+------------------------------------------------------------------------------------------------
+-::: Garbage Collection in C# | .NET Framework :::-
+------------------------------------------------------------------------------------------------
+
+Automatic memory management is made possible by Garbage Collection in .NET Framework. 
+When a class object is created at runtime, certain memory space is allocated to it in the heap memory. 
+However, after all the actions related to the object are completed in the program, the memory space allocated to it is a waste as it cannot be used. 
+In this case, garbage collection is very useful as it automatically releases the memory space after it is no longer required.
+
+
+Heap Generations in Garbage Collection
+
+The heap memory is organized into 3 generations so that various objects with different lifetimes can be handled appropriately during garbage collection.
+
+Generation 0 : All the short-lived objects such as temporary variables are contained in the generation 0 of the heap memory. 
+
+Generation 1 : If space occupied by some generation 0 objects that are not released in a garbage collection run, then these objects get moved to generation 1. 
+		The objects in this generation are a sort of buffer between the short-lived objects in generation 0 and the long-lived objects in generation 2.
+
+Generation 2 : The objects in generation 2 are long lived such as static objects as they remain in the heap memory for the whole process duration.
+
+
+
+------------------------------------------------------------------------------------------------
+-::: C# | Interface :::-
+------------------------------------------------------------------------------------------------
+
+An interface is like a contract. In the human world, the contract between the two or more humans binds them to act as per the contract. 
+In the same way, the interface includes the declaration of one or more functionalities.
+
+If you use an access modifier in an interface then the C# compiler will give a compile-time error "The modifier 'public/private/protected' is not valid 
+for this item".
+(Visual Studio will show an error immediately without compilation.)
+
+Do not include 'public' in an interface as all the members are public by default. C# will give compile-time error if used 'public'.
+
+- The interface will always defined with the help of keyword ‘interface‘.
+- An interface only contains declarations of method, properties, indexers, and events.
+- Interfaces can’t have private members.
+- By default all the members of Interface are public and abstract.
+- Multiple inheritance is possible with the help of Interfaces but not with classes.
+
+interface  <interface_name >
+{
+    // declare Events
+    // declare indexers
+    // declare methods 
+    // declare properties
+}
+
+To declare an interface, use interface keyword. It is used to provide total abstraction. 
+That means all the members in the interface are declared with the empty body and are public and abstract by default.
+A class that implement interface must implement all the methods declared in the interface.
+
+
+
+Advantage of Interface:
+
+It is used to achieve loose coupling.
+It is used to achieve total abstraction.
+To achieve component-based programming
+To achieve multiple inheritance and abstraction.
+Interfaces add a plug and play like architecture into applications.
+
+
+------------------------------------------------------------------------------------------------
+C# Multithreading
+------------------------------------------------------------------------------------------------
+
+
+Multitasking is the simultaneous execution of multiple tasks or processes over a certain time interval. 
+Windows operating system is an example of multitasking because it is capable of running more than one 
+process at a time like running Google Chrome, Notepad, VLC player etc. at the same time.
+
+The operating system uses a term known as an process to execute all these applications at the same time. 
+A process is a part of an operating system which is responsible for executing an application. 
+Every program that executes on your system is a process and to run the code inside the application a process uses a term known as an thread.
+
+A thread is a lightweight process, or in other words, a thread is a unit which executes the code under the program. 
+So every program has logic and a thread is responsible for executing this logic.
+
+Every program by default carries one thread to executes the logic of the program and the thread is known as the Main Thread, 
+so every program or application is by default single threaded model. 
+
+
+The single thread runs all the process present in the program in synchronizing manner, means one after another. So, the second process
+ waits until the first process completes its execution, it consumes more time in processing.
+
+
+
+Multi-threading is a process which contains multiple threads within a single process. 
+Here each thread performs different activities. 
+For example, we have a class and this call contains two different methods, now using multithreading each method is 
+executed by a separate thread. So the major advantage of multithreading is it works simultaneously, means multiple tasks executes at the same time.
+
+
+Advantages of Multithreading:
+
+It executes multiple process simultaneously.
+Maximize the utilization of CPU resources.
+Time sharing between multiple process.
+
+
+
+------------------------------------------------------------------------------------------------
+Singleton Design Pattern In C#
+------------------------------------------------------------------------------------------------
+
+Singleton belongs to Creational Type patterns.
+
+This pattern is used when we need to ensure that only one object of a particular class need to be created.
+ 
+Creational design type deals with the object creation machanism which is suitable to a given situation.
+
+Advantages of using the Singleton Design Pattern ::-
+
+1. The first and most important advantage of using the singleton design pattern in C# is that it takes care of concurrent access to the shared resource. 
+That means if we are sharing a resource with multiple clients simultaneously, then concurrent access to that resource is well 
+managed by the singleton design pattern.
+
+2. It can be extended into a factory pattern.
+
+3. To share common data i.e. master data and configuration data which is not changed that frequently in an application. 
+In that case, we need to cache the objects in memory.
+
+Implementation Guidelines ::-
+
+1. You need to declare a constructor that should be private and parameterless.
+2. You also need to create a public static property/method which will return the single created instance of the singleton class. 
+3. The instance is stored as a private static variable.
+4. The class should be declared as sealed which will ensure that it cannot be inherited.
+
+
+Public sealed class Singleton
+{
+	private static int counter = 0;
+
+	private static Singleton instance = null;
+	public static Singleton GetInstance
+	{
+		get
+		{
+			if(instance==null)
+				instance = new singleton();
+				
+			return 	instance;
+		}
+	}
+	
+	private Singleton()
+	{
+		 counter++;
+         Console.WriteLine("Counter Value " + counter.ToString());
+	}
+	
+	public void PrintDetails(string message)
+	{
+		Console.WriteLine(message);
+	}
+}
+
+
+namespace SingletonDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Singleton fromTeachaer = Singleton.GetInstance;
+            fromTeachaer.PrintDetails("From Teacher");
+            Singleton fromStudent = Singleton.GetInstance;
+            fromStudent.PrintDetails("From Student");
+            Console.ReadLine();
+        }
+    }
+}
+
+
+Why is singleton class sealed ::: -
+
+1. First, create the Singleton class without using the sealed keyword. We also create another class with the name 
+DerivedSingleton and then Inherits it from the singleton class.
+
+public class Singleton
+{
+	private Singleton()
+	{
+	}
+}
+
+public class DerivedSingleton : Singleton
+{
+}
+	
+Result ::: Error CS0122 ‘Singleton.Singleton()’ is inaccessible due to its protection level
+
+
+Note :: So, if private constructor restrict inheritance then why we need sealed class.
+
+------------------------------------------------
+
+2. What is a nested class in C#? 
+
+Whenever we defined a class within another class in C# then the inner class is called a nested class or child class. 
+Now if we compile the program then we will not get any error. 
+
+public class Singleton
+{
+	private Singleton()
+	{
+	}
+	
+	public class DerivedSingleton : Singleton
+	{
+	}
+}
+      
+The above output clearly shows that the counter value has incremented to 2 which proves that the private constructor 
+executed twice and hence it creates multiple instances of the singleton class. So, by removing the sealed keyword 
+we can inherit the singleton class and also possible to create multiple objects of the singleton class. 
+
+This violates singleton design principles.
+
+------------------------------------------------
+
+3. Let’s make the Singleton class as sealed as shown below and then compiled the program and see what happens.
+	  
+namespace SingletonDemo
+{
+    public sealed class Singleton
+    {
+        private static int counter = 0;     
+        private static Singleton instance = null;  
+        public static Singleton GetInstance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Singleton();
+                return instance;
+            }
+        }  
+        private Singleton()
+        {
+            counter++;
+            Console.WriteLine("Counter Value " + counter.ToString());
+        }    
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+        public class DerivedSingleton : Singleton
+        {
+        }
+    }
+}
+
+Now, we got an error when compiling the program saying that we cannot derive a sealed class.
+
+So from this point, we conclude that the private constructor in c# will helps us only preventing any external instantiations of the class 
+and the sealed keyword will prevent the class inheritances.
+
+
+-------------------------------------------------------------------------------------------------	  
+-------------------------------------------------------------------------------------------------
+
+Static Class:-
+
+1. You cannot create the instance of static class.
+2. Static Class cannot have constructor.
+3. We cannot pass the static class to method.
+4. We cannot inherit Static class to another Static class in C#.
+
+Singleton:-
+1. You can create one instance of the object and reuse it.
+2. Singleton class can have constructor.
+3. You can create the object of singleton class and pass it to method.
+4. Singleton class does not say any restriction of Inheritance.
+
+Singleton can be extended e.g. through an interface while static class can't be.
+
+
+
+
+
+------------------------------------------------------------------------------------------------
+Factory Method Design Pattern - C#
+------------------------------------------------------------------------------------------------
+
+Factory method pattern falls under Creational Pattern of Gang of Four (GOF) Design Patterns.
+
+The Factory Method pattern is a Creational pattern which defines an interface for creating an object,but let subclass decide which class to instantiate. 
+
+In Factory pattern, we create the object without exposing the creation logic to the client and refer to newly created object using a interface.
+
+   
+				uses						Creates
+   |Client| ------------------ |Factory| --------------------- |Product|
+   
+
+In simple word, the client uses the factory to create an instance of product.
+
+
+   
+A vehicle can consist of any number of wheels, as an example, in a game when a character needs to build a vehicle when they have a set number of wheels.
+
+If we pass the number of Wheels to our factory method it will build the vehicle and return it.
+
+
+	 public interface IVehicle
+	 {
+
+	 }
+	 public class Unicycle : IVehicle
+	 {
+
+	 }
+	 public class Car : IVehicle
+	 {
+
+	 }
+	 public class Motorbike : IVehicle
+	 {
+
+	 }
+	 public class Truck : IVehicle
+	 {
+
+	 } 
+
+
+We can now create a VechicleFactory class with a build method to create a vehicle depending on the number of wheels supplied.
+
+
+	public static class VehicleFactory
+	{
+		public static IVehicle Build(int numberOfWheels)
+		{
+			switch (numberOfWheels)
+			{
+				case 1:
+					return new UniCycle();
+				case 2:
+				case 3:
+					return new Motorbike();
+				case 4:
+					return new Car();
+				default :
+					return new Truck();
+
+			}
+		}
+	}
+
+We can now develop our little game, in this example it will be a Console Application, and we'll ask the user to enter a number of 
+wheels and then we'll tell them what type of Vehicle they built.
+ 
+	class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a number of wheels between 1 and 12 to build a vehicle and press enter");
+
+            var wheels = Console.ReadLine();
+            var vehicle = VehicleFactory.Build(Convert.ToInt32(wheels));
+            Console.WriteLine($" You built a {vehicle.GetType().Name}");
+            Console.Read();
+        }
+    }
+
+-------------------------------------------------------------------------------------------------
+	STRUCTURE										CLASS
+-------------------------------------------------------------------------------------------------
+
+1. Structs are value types						1. Classes are reference types
+
+2. Stack memory									2. Heap memory									
+
+3. Structure does not contain constructor 		3. Classes can contain constructor or destructor.
+or destructor.		
+
+4. Struct can create an instance, without		4. Classes used new keyword for creating instances.		
+new keyword.
+
+5. A Struct is not allowed to inherit from 		5. A Class can inherit from another class.
+another struct or class.
+
+
+
+Note : By default structures are sealed, that is the reason structures are not supporting inheritance.
+
+Both Classes and Structs:
+
+- Can contain methods and events
+- Can support interfaces
+
+
+When to Use Structure and Class?
+
+In general, classes can be used when you have more complex behavior or data. And if you think that these 
+behaviour or data to be modified after creating an instance of class, then classes are absolute methods.
+
+Structures can be used for small data structures. If developer feels that data members of structure cannot 
+to be modified after creating structure, then having structure will suit.
+
+
+
+-------------------------------------------------------------------------------------------------
+c# | When to Use Abstract Class in C#, Real World Example
+-------------------------------------------------------------------------------------------------
+
+- The common properties of Abstract class are it cannot be initiated
+- An abstract class is a special class that contains both abstract and non-abstract members in it.
+
+
+Consider an application that calculates salary of full time and contract based employees. 
+There are few common properties of both employees, e.g., both employees have name, address, ID, but different way of calculating salaries.
+
+So we can declare one master class named as BaseEmployee and place common properties and Virtual Salary Calculator function with no implementation.
+
+    public abstract class BaseEmployee
+    {
+        public string EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
+        public string EmployeeAddress { get; set; }
+
+        public abstract double CalculateSalary(int hoursWorked);
+    }
+
+    public class FullTimeEmployee : BaseEmployee
+    {
+        public override double CalculateSalary(int hoursWorked)
+        {
+            return hoursWorked * 60.00+3700;
+        }
+    }
+
+    public class ContractEmployee : BaseEmployee
+    {
+        public override double CalculateSalary(int hoursWorked)
+        {
+            return hoursWorked * 65.00;
+        }
+    }
+
+
+So, if we want to stop user from accidentally creating a BaseEmployee class object we should declare this class and 
+Salary Calculator as Abstract so that it can only be inherited but not initiated.
+
+
+-------------------------------------------------------------------------------------------------
+c# | Can abstract class have constructor in C# program
+-------------------------------------------------------------------------------------------------
+
+Yes, an abstract class can have a constructor, even though abstract class cannot be instantiated.
+
+Before abstract class constructor uses discussion, note that when we create an object of a derived 
+class then constructor of abstract base class is implicitly called, even though we cannot instantiate an abstract class.
+
+An abstract class can have implementation of methods and some of the fields, it is using might need to be initialized to default.
+
+abstract class A
+{
+	//Make it protected as it will be called by only child classes
+
+    //we can have it public as well but, since cannot be instantiated 
+    //there is no need to make it public
+	
+    protected A() 
+	{
+		Console.WriteLine("Abstract class constructor"); 
+	}
+}
+//Derived class
+class B : A
+{
+   public B() 
+   {
+		Console.WriteLine("Derived class constructor"); 
+   }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        B obj = new B();
+    }
+}
+
+---------
+Output:
+--------
+Abstract class constructor
+Derived class constructor
+
+
+
+
+-------------------------------------------------------------------------------------------------
+c# | Interface
+-------------------------------------------------------------------------------------------------
+
+- Reusablility.
+- Interface contains only abstract methods.
+- We cannot create object of an interface.
+- The default scope for a member in Interface is Public. So, no need to use the Public access specifier in the program.
+
+
+1. Interfaces allow us to implement polymorphic behavior. Of course, abstract classes can also be used to implement polymorphic behavior.
+2. The Interfaces allow us to develop very loosely coupled systems.
+3. Interfaces enable mocking for better unit testing.
+4. The Interfaces enable us to implement multiple inheritances in C#.
+5. Interfaces are great for implementing Inversion of Control or Dependency Injection.
+
+
+-------------------------------------------------------------------------------------------------
+C# | Constructors
+-------------------------------------------------------------------------------------------------
+
+Constructor is a method which will invoke automatically whenever an instance of class or struct is created.  
+The constructor will have a same name as the class or struct and it useful to initialize and set a default values for the data members of the new object.
+
+In c#, a class can contain more than one constructor with different type of arguments and the constructors will never return anything.
+
+A constructor doesn’t have any return type, not even void.
+
+	public class User
+	{
+		// Constructor
+		public User()
+		{
+			// Your Custom Code
+		}
+	}
+
+
+C# Constructor Types ::
+----------------------
+a) Default Constructor
+b) Parameterized Constructor
+c) Copy Constructor
+d) Static Constructor
+e) Private Constructor
+
+
+
+1. Default Constructor
+----------------------
+In c#, if we create a constructor without having any parameters, then we will call it as default constructor.
+The default constructor initializes all numeric fields to zero and all string and object fields to null inside a class.
+
+    class User
+    {
+        public string name, location;
+
+        // Default Constructor
+        public User()
+        {
+            name = "Suresh Dasari";
+            location = "Hyderabad";
+        }
+    }
+	
+2. Parametrized Constructor
+----------------------
+In c#, if we create a constructor with at least one parameter, then we will call it as parameterized constructor.
+
+	class User
+    {
+        public string name, location;
+
+        // Parameterized Constructor
+        public User(string a, string b)
+        {
+            name = a;
+            location = b;
+        }
+    }
+	
+3. Copy Constructor
+----------------------
+In c#, Copy Constructor is a parameterized constructor which contains a parameter of same class type.
+	
+In simple words, we can say copy constructor is a constructor which copies a data of one object into another object.
+	
+	class User
+	{
+		// Parameterized Constructor
+		public User(string a, string b)
+		{
+			// your code
+		}
+
+		// Copy Constructor
+		public User(User user)
+		{
+			// your code
+		}
+	}
+	
+
+4. Private Constructor
+----------------------
+If a constructor is created with private specifier is known as Private Constructor. 
+It is not possible for other classes to derived from this class and also it’s not possible to create an instance of this class (class except nested classes).
+
+	class User
+	{
+	  // Private Constructor
+	  private User()
+	  {
+		 // Your Custom Code
+	  }
+	}
+
+Points To Remember :
+
+- It is the implementation of a singleton class pattern.
+- Use private constructor when we have only static members.
+- Using private constructor, prevents the creation of the instances of that class.
+
+    class User
+    {
+        // private Constructor
+        private User()
+        {
+            Console.WriteLine("I am Private Constructor");
+        }
+
+        public static string name, location;
+
+        // Default Constructor
+        public User(string a, string b)
+        {
+            name = a;
+            location = b;
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            // The following comment line will throw an error because constructor is inaccessible
+
+            //User user = new User();
+
+            // Only Default constructor with parameters will invoke
+
+            User user1 = new User("Suresh Dasari", "Hyderabad");
+
+            Console.WriteLine(User.name + ", " + User.location);
+
+            Console.WriteLine("\nPress Enter Key to Exit..");
+
+            Console.ReadLine();
+
+        }
+    }
+
+If you observe above example, we created a class with private constructor and default constructor with parameters. 
+If you uncomment the commented line (User user = new User();), then it will throw an error because the constructor 
+is a private so it won’t allow you to create an instance for that class.
+
+
+
+5. Static Constructor
+----------------------
+In c#, Static Constructor is used to perform a particular action only once throughout the application and it will be called 
+automatically before the first instance is created.
+
+Generally, in c# the static constructor will not accept any access modifiers and parameters. In simple words we can say it’s a parameter less.
+
+
+Following are the properties of static constructor in c# programming language.
+
+- Static constructor in c# won’t accept any parameters and access modifiers.
+- The static constructor will invoke automatically, whenever we create a first instance of class.
+- The static constructor will be invoked by CLR so we don’t have a control on static constructor execution order in c#.
+- In c#, only one static constructor is allowed to create.
+
+
+    class User
+    {
+        // Static Constructor
+        static User()
+        {
+            Console.WriteLine("I am Static Constructor");
+        }
+
+        // Default Constructor
+        public User()
+        {
+            Console.WriteLine("I am Default Constructor");
+        }
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            // Both Static and Default constructors will invoke for first instance
+            User user = new User();
+
+            // Only Default constructor will invoke
+            User user1 = new User();
+
+            Console.WriteLine("\nPress Enter Key to Exit..");
+            Console.ReadLine();
+
+        }
+    }
+
+--------------------------------------------------------------------------------------------------------------
+ C# Constructor Overloading	
+--------------------------------------------------------------------------------------------------------------	
+	
+	In c#, we can overload the constructor by creating another constructor with same method name but with different parameters.
+	
+	
+	class User
+    {
+        public string name, location;
+
+        // Default Constructor
+        public User() 
+		{
+            name = "Suresh Dasari";
+            location = "Hyderabad";
+        }
+
+        // Parameterized Constructor
+        public User(string a, string b)
+        {
+            name = a;
+            location = b;
+        }
+    }
+	
+--------------------------------------------------------------------------------------------------------------
+ C# Constructor Chaining	
+--------------------------------------------------------------------------------------------------------------	
+	
+ In c#, Constructor Chaining is an approach to invoke one constructor from another constructor. 
+ To achieve constructor chaining we need to use this keyword after our constructor definition.
+
+ 	class User
+    {
+        public User()
+        {
+            Console.Write("Hi, ");
+        }
+
+        public User(string a): this()
+        {
+            Console.Write(a);
+        }
+
+        public User(string a, string b): this("welcome")
+        {
+            Console.Write(a + " " + b);
+        }
+    }
+	
+	
+	
+	
+	
+MCID 17877356
+
+
+
+--------------------------------------------------------------------------------------------------------------
+ Unmanaged Code :-
+--------------------------------------------------------------------------------------------------------------
+
+1.The code, which is developed outside .NET, Framework is known as unmanaged code.
+2.Applications that do not run under the control of the CLR are said to be unmanaged.
+3.Unmanaged code is executed with help of wrapper classes.
+C++, with code of VB, ASP and COM are examples of unmanaged code.
+
+
+Managed Code 
+
+1.The code, which is developed in .NET framework, is known as managed code. This code is directly executed by 
+CLR with help of managed code execution. Any language that is written in .NET Framework is managed code.
+
+
+ 
+--------------------------------------------------------------------------------------------------------------
+C# | Collection
+--------------------------------------------------------------------------------------------------------------
+
+
+
+There are 2 distinct collection types in C#:
+
+- Standard
+	The standard collections are found under the System.Collections.
+		Standard collections include ArrayList, Hashtable, Queue, and Stack.
+	 
+- Generic
+	The generic collections are found under System.Collections.Generic. 
+		The generic collections include Dictionary<T, T>, List<T>, SortedList<T>, Queue<T>, and Stack<T>
+
+- concurrent
+	Concurrent collections include BlockingCollection<T>, ConcurrentDictionary<T, T>, ConcurrentQueue<T>, and ConcurrentStack<T>
+
+1. List:-Lists are indexed based Generic Collections. Lists are Generic form of ArrayList.
+
+2. Dictionary:-Dictionary are key based generics collection. Dictionary are generic form of Hashtable.
+
+3. Stack:-Stack generic collection allows you to get value in "LIFO"(last in first out) manner.
+
+4. Queue:-Queue generic collection allows you to get value in "FIFO"(first in first out) manner.
+
+
+
+--------------------------------------------------------------------------------------------------------------
+collection namespace name in threading
+--------------------------------------------------------------------------------------------------------------
+
+The System.Collections.Concurrent namespace provides several thread-safe collection classes that should be used in place of the corresponding types in the System.Collections and System.Collections.Generic namespaces whenever multiple threads are accessing the collection concurrently.
+
+
+--------------------------------------------------------------------------------------------------------------
+virtual in entity framework
+--------------------------------------------------------------------------------------------------------------
+
+Navigation Properties in EF are the properties of a class that relate to another class/table. In database speak, foreign relationships.
+
+You should use virtual keyword, when you want to load data with lazy loading.
+
+lazy loading is the process whereby an entity or collection of entities is automatically loaded from the database the first time it is accessed.
+
+	public partial class Person
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Person()
+        {
+            this.Employees = new HashSet<Employee>();
+        }
+    
+        public int PersonId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Employee> Employees { get; set; }
+    }
+	
+	public partial class Employee
+    {
+        public int EmployeeId { get; set; }
+        public int PersonId { get; set; }
+        public string Title { get; set; }
+        public string Department { get; set; }
+    
+        public virtual Person Person { get; set; }
+    }
+	
+	
+Lazy loading of the Posts collection can be turned off by making the Posts property non-virtual.
+
+if lazy loading is off, Loading of the Posts collection can still be achieved using eager loading (using Include method)
+
+using (var context = new BloggingContext()) 
+{ 
+    // Load all blogs and related posts 
+    var blogs1 = context.Blogs 
+                          .Include(b => b.Posts) 
+                          .ToList(); 
+}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------
+What are the 4 pillars of any object-oriented programming language?
+--------------------------------------------------------------------------------------------------------------
+
+Abstraction
+Inheritance
+Encapsulation
+Polymorphism
+
+
+--------------------------------------------------------------------------------------------------------------
+Do structs support inheritance?
+--------------------------------------------------------------------------------------------------------------
+No, structs do not support inheritance, but they can implement interfaces.
+
+
+--------------------------------------------------------------------------------------------------------------
+What is the main advantage of using inheritance? 
+--------------------------------------------------------------------------------------------------------------
+Code reuse
+
+
+--------------------------------------------------------------------------------------------------------------
+Is the following code legal?
+--------------------------------------------------------------------------------------------------------------
+class ChildClass : ParentClassA, ParentClassB
+{
+}
+No, a child class can have only one base class. We cannot specify 2 base classes at the same time. 
+C# supports single class inheritance only. Therefore, we can specify only one base class to inherit from. 
+However, it does allow multiple interface inheritance.
+
+
+--------------------------------------------------------------------------------------------------------------
+Does C# support multiple class inheritance?
+--------------------------------------------------------------------------------------------------------------
+No, C# supports single class inheritance only. However, classes can implement multiple interfaces at the same time.
+
+
+
+--------------------------------------------------------------------------------------------------------------
+Why does C# not support multiple class inheritance?
+--------------------------------------------------------------------------------------------------------------
+
+C# does not support multiple class inheritance because of the diamond problem that is associated, with multiple class inheritance. 
+Let us understand the diamond problem of multiple class inheritance with an example.
+
+					------
+					ClassA
+					------
+		
+		------					------
+		ClassB					ClassC
+		------					------
+
+					------
+					ClassD
+					------
+
+ 
+As shown in the image above, I have 2 classes – Class B and Class C and Both of these classes are inherited from Class A. Now, we have 
+another class i.e. Class D which is inherited from both Class B and Class C
+
+So if a method in Class D calls a method defined in Class A and Class D has not overridden the invoked method. 
+But both Class B and Class C have overridden the same method differently. Now, the ambiguity is, from which class does, Class D inherits 
+the invoked method: Class B, or Class C?
+
+In order not to have these problems, C# does not support multiple class inheritance.
+
+
+--------------------------------------------------------------------------------------------------------------
+Can an Interface contain fields?
+--------------------------------------------------------------------------------------------------------------
+No, an Interface cannot contain fields
+
+
+--------------------------------------------------------------------------------------------------------------
+What is the difference between class inheritance and interface inheritance?
+--------------------------------------------------------------------------------------------------------------
+Classes and structs can inherit from interfaces just like how classes can inherit a base class or struct. However, there are 2 differences.
+
+A class or a struct can inherit from more than one interface at the same time whereas a class or a struct cannot inherit from more than one class at the same time
+
+When a class or struct inherits an interface, it inherits only the method names and signatures, because the interface itself contains no implementations.
+
+
+--------------------------------------------------------------------------------------------------------------
+Can an interface inherit from another interface?
+--------------------------------------------------------------------------------------------------------------
+Yes, an interface can inherit from another interface.
+
+
+--------------------------------------------------------------------------------------------------------------
+Can you create an instance of an interface?
+--------------------------------------------------------------------------------------------------------------
+No, we cannot create an instance of an interface.
+
+
+--------------------------------------------------------------------------------------------------------------
+If a class inherits an interface, what are the 2 options available for that class?
+--------------------------------------------------------------------------------------------------------------
+
+Option1: Provide Implementation for all the members, inherited from the interface.
+
+Option2: If the class does not wish to provide Implementation for all the members inherited from the interface, then the class has to be marked as abstract.
+
+
+--------------------------------------------------------------------------------------------------------------
+Can a method derived from interface marked as virtual ?
+--------------------------------------------------------------------------------------------------------------
+Yes and they can then be overridden
+
+--------------------------------------------------------------------------------------------------------------
+Mention some Interface in .Net Framework?
+--------------------------------------------------------------------------------------------------------------
+IDisposable,IEnumerable,ICollection
+
+--------------------------------------------------------------------------------------------------------------
+ Can we override a static method?
+--------------------------------------------------------------------------------------------------------------
+
+No. You can't override a static method. A static method can't be virtual, since it's not related to an instance of the class.
+
+--------------------------------------------------------------------------------------------------------------
+Can we use "this" inside a static method in C#?
+--------------------------------------------------------------------------------------------------------------
+
+No. Because "this" points to an instance of the class, in the static method you don't have an instance.
+
+
+--------------------------------------------------------------------------------------------------------------
+C# | How to Implement Multiple Interfaces Having Same Method Name
+--------------------------------------------------------------------------------------------------------------
+
+interface G1 { 
+      
+    // method declaration 
+    void mymethod(); 
+} 
+  
+interface G2 { 
+      
+    // method declaration 
+    void mymethod(); 
+}
+
+
+class Geeks : G1, G2 
+{ 
+    // Here mymethod belongs to  
+    // G1 interface 
+    void G1.mymethod() 
+	{ 
+		Console.WriteLine("GeeksforGeeks"); 
+	} 
+      
+    // Here mymethod belongs to  
+    // G2 interface 
+    void G2.mymethod() 
+	{ 
+		Console.WriteLine("GeeksforGeeks"); 
+	} 
+}
+
+// Driver Class 
+public class GFG { 
+      
+    // Main Method 
+    static public void Main () { 
+          
+        // Creating object of Geeks 
+        // of G1 interface 
+        G1 obj = new Geeks(); 
+          
+        // calling G1 interface method 
+        obj.mymethod(); 
+          
+        // Creating object of Geeks 
+        // of G2 interface 
+        G2 ob = new Geeks(); 
+          
+        // calling G2 interface method 
+        ob.mymethod(); 
+    } 
+} 
+
+
+--------------------------------------------------------------------------------------------------------------
+C# | we can use 3 types of keywords for Method Overriding
+--------------------------------------------------------------------------------------------------------------
+
+Creating a method in the derived class with the same signature as a method in the base class is called as method overriding.
+
+Method overriding is one of the ways by which C# achieve Run Time Polymorphism(Dynamic Polymorphism).
+
+1. virtual keyword: This modifier or keyword use within base class method. It is used to modify a method in base class for 
+overridden that particular method in the derived class.
+
+2. override: This modifier or keyword use with derived class method. It is used to modify a virtual or abstract method into 
+derived class which presents in base class.
+
+
+class base_class
+{
+    public virtual void gfg();
+}
+
+class derived_class : base_class
+{
+    public override void gfg();
+}
+
+class Main_Method
+{
+	static void Main()
+	{
+		derived d_class = new derived_class();
+		d.gfg();
+    
+		base_class b = new derived_class();
+		b.gfg();
+	}
+}
+
+
+--------------------------------------------------------------------------------------------------------------
+Abstract Factory Design Pattern in C#
+--------------------------------------------------------------------------------------------------------------
+
+Abstract factory design pattern provide an interface to create set of related or dependent object without specifying their concrete class.
+Abstract factory pattern behave as the master factory which is responsible for creating other factories.
+
+Gang of Four (GoF) Definition:
+“Provide an interface for creating families of related or dependent objects without specifying their concrete classes.”
+
+
+
+Real Life Example. (Easy to remember)
+-------------------------------------
+Factory:
+
+Imagine you are constructing a house and you approach a carpenter for a door. You give the measurement for the door and your requirements, and he will 
+construct a door for you. In this case, the carpenter is a factory of doors. Your specifications are inputs for the factory, and the door is the output 
+or product from the factory.
+
+Abstract Factory:
+
+Now, consider the same example of the door. You can go to a carpenter, or you can go to a plastic door shop or a PVC shop. All of them are door factories. 
+Based on the situation, you decide what kind of factory you need to approach. This is like an Abstract Factory.
+
+
+
+
+Creating the Abstract Products
+------------------------------
+In our case, we need two abstract products Bike and Scooter
+
+	interface Bike
+	{
+ 	   string Name();
+	}
+
+	interface Scooter
+	{
+ 	  string Name();
+	}
+
+
+Creating the Concrete Products
+------------------------------
+Now let us go ahead and create some concrete products for Bike:
+
+	class RegularBike : Bike
+	{
+ 		public string Name()
+ 		{
+ 		  return "Regular Bike- Name";
+ 		}
+	}
+
+	class SportsBike : Bike
+	{
+ 		public string Name()
+ 		{
+ 		  return "Sports Bike- Name";
+ 		}
+	}
+
+
+Let's do the same for Scooter:
+
+
+	class RegularScooter : Scooter
+	{
+ 		public string Name()
+ 		{
+ 		  return "Regular Scooter- Name";
+ 		}
+	}
+
+
+	class Scooty : Scooter
+	{
+ 		public string Name()
+ 		{
+ 		  return "Scooty- Name";
+ 		}
+	}
+
+
+Creating the Abstract Factory
+----------------------------
+	
+	interface VehicleFactory
+	{
+ 		Bike GetBike(string Bike);
+ 		Scooter GetScooter(string Scooter);
+	}
+
+
+Creating the Concrete Factories
+------------------------------
+
+	class HondaFactory : VehicleFactory
+	{
+ 		public Bike GetBike(string Bike)
+ 		{
+ 			switch (Bike)
+ 			{
+ 			  case "Sports":
+ 			   return new SportsBike();
+ 			  case "Regular":
+ 			   return new RegularBike();
+ 			  default:
+ 			   throw new ApplicationException(string.Format("Vehicle '{0}' cannot be created", Bike));
+ 			}
+
+ 		}
+
+ 		public Scooter GetScooter(string Scooter)
+ 		{
+ 			switch (Scooter)
+ 			{
+ 			  case "Sports":
+ 			   return new Scooty();
+ 			  case "Regular":
+ 			   return new RegularScooter();
+ 			  default:
+ 			   throw new ApplicationException(string.Format("Vehicle '{0}' cannot be created", Scooter));
+ 			}
+ 		}
+	}
+
+
+
+	class HeroFactory : VehicleFactory
+	{
+ 		public Bike GetBike(string Bike)
+ 		{
+ 			switch (Bike)
+ 			{
+ 			  case "Sports":
+ 			   return new SportsBike();
+ 			  case "Regular":
+ 			   return new RegularBike();
+ 			  default:
+ 			   throw new ApplicationException(string.Format("Vehicle '{0}' cannot be created", Bike));
+ 			}
+
+ 		}
+
+ 		public Scooter GetScooter(string Scooter)
+ 		{
+ 			switch (Scooter)
+ 			{
+ 			  case "Sports":
+ 			   return new Scooty();
+ 			  case "Regular":
+ 			   return new RegularScooter();
+ 			  default:
+ 			   throw new ApplicationException(string.Format("Vehicle '{0}' cannot be created", Scooter));
+ 			}
+ 		}
+	}
+
+
+
+
+Creating the Client
+--------------------------
+
+	class VehicleClient
+	{
+ 		Bike bike;
+ 		Scooter scooter;
+
+ 		public VehicleClient(VehicleFactory factory, string type)
+ 		{
+ 			bike = factory.GetBike(type);
+ 			scooter = factory.GetScooter(type);
+ 		}
+
+ 		public string GetBikeName()
+ 		{
+ 			return bike.Name();
+ 		}
+
+ 		public string GetScooterName()
+ 		{
+ 			return scooter.Name();
+ 		}
+	}
+
+
+Call Demo
+--------------------------
+/// <summary>
+/// Abstract Factory Pattern Demo
+/// </summary>
+class Program
+{
+ 	static void Main(string[] args)
+ 	{
+ 		VehicleFactory honda = new HondaFactory();
+ 		VehicleClient hondaclient = new VehicleClient(honda, "Regular");
+ 
+ 		Console.WriteLine("******* Honda **********");
+ 		Console.WriteLine(hondaclient.GetBikeName());
+ 		Console.WriteLine(hondaclient.GetScooterName());
+ 
+ 		hondaclient = new VehicleClient(honda, "Sports");
+		Console.WriteLine(hondaclient.GetBikeName());
+ 		Console.WriteLine(hondaclient.GetScooterName());
+ 
+ 		VehicleFactory hero = new HeroFactory();
+ 		VehicleClient heroclient = new VehicleClient(hero, "Regular");
+ 
+ 		Console.WriteLine("******* Hero **********");
+ 		Console.WriteLine(heroclient.GetBikeName());
+ 		Console.WriteLine(heroclient.GetScooterName());
+ 
+ 		heroclient = new VehicleClient(hero, "Sports");
+ 		Console.WriteLine(heroclient.GetBikeName());
+ 		Console.WriteLine(heroclient.GetScooterName());
+ 
+ 		Console.ReadKey();
+ 	}
+}
+
+
+------------------------------------------------------------------------------
+Adapter Design Pattern - C#
+------------------------------------------------------------------------------
+
+Adapter pattern falls under Structural Pattern of Gang of Four (GOF) Design Patterns in .Net. 
+
+Adapter pattern acts as a bridge between two incompatible interfaces. This pattern involves a single class called "adapter" which is responsible 
+for communication between two independent or incompatible interfaces.
+
+For Example: A card reader acts as an adapter between a memory card and a laptop. 
+
+Your laptop charger which you bought in US has flattish pins which easily gets hooked into electrical sockets in US. 
+But when you travel to European countries you may have round holes in the electrical sockets. What do you do then?-Simple buy socket adapters/converters for that.
+
+
+We use Adapters when incompatible interfaces are involved. 
+
+
+interface ITarget
+{
+  List<string> GetProducts();
+}
+
+
+public class VendorAdaptee
+{
+   public List<string> GetListOfProducts()
+   {
+      List<string> products = new List<string>();
+      products.Add("Gaming Consoles");
+      products.Add("Television");
+      products.Add("Books");
+      products.Add("Musical Instruments");
+      return products;
+   }
+}
+
+
+class VendorAdapter:ITarget
+{
+   public List<string> GetProducts()
+   {
+      VendorAdaptee adaptee = new VendorAdaptee();
+      return adaptee.GetListOfProducts();
+   }
+}
+
+
+class ShoppingPortalClient
+{
+   static void Main(string[] args)
+   {
+      ITarget adapter = new  VendorAdapter();
+      foreach (string product in adapter.GetProducts())
+      {
+        Console.WriteLine(product);
+      }
+      Console.ReadLine();
+   }
+}
+
+
+------------------------------------------------------------------------------
+C# : Repository Design Pattern  
+------------------------------------------------------------------------------
+
+Repository Design Pattern acts as a middleman or middle layer between the rest of the application and the data access logic.
+
+The repository should look like an in-memory collection and should have generic methods like Add, Remove or FindById. With such generic methods, the repository 
+can be easily reused in different applications.
+
+The advantage of doing so is that, if you need to do any change then you need to do in one place. Another benefit is that testing your 
+controllers becomes easy because the testing framework need not run against the actual database access code. 
+
+If we use the database context directly inside the controllers. This creates tight coupling between the controller and the data access layer.
+
+To implement this pattern, we can either use the approach of having a one-repository per model, which means, each entity of the database will have 
+its own repository, or we can use a generic repository, that can be used by all the entities of the database. 
+
+
+1. One repository per entity (non-generic) : This type of implementation involves the use of one repository class for each entity. 
+For example, if you have two entities Order and Customer, each entity will have its own repository.
+
+2. Generic repository: A generic repository is the one that can be used for all the entities, in other words it can be either used 
+for Order or Customer or any other entity.
+
+Repository Pattern Goals
+-----------------------------
+-Decouple Business code from data Access. As a result, the persistence Framework can be changed without a great effort
+-Separation of Concerns
+-Minimize duplicate query logic
+-Testability
+
+
+
+--------------------------------------------------------------------------------
+Unit of Work
+--------------------------------------------------------------------------------
+
+The Unit of Work pattern is used to group one or more operations (usually database operations) into a single transaction or “unit of work”, so that 
+all operations either pass or fail as one. 
+
+- Increased maintainability, flexibility and testability
+
+
+A Unit of Work keeps track of everything you do during a business transaction that can affect the database. When you’re done, it figures 
+out everything that needs to be done to alter the database as a result of your work.
+
+
+
+Note : DbContext, within Entity Framework is an example of the Unit Of Work and, IDbSet<T> is a repository providing an abstraction layer over the data access layer.
+
+
+
+--------------------------------------------------------------------------------
+C# : NUnit
+--------------------------------------------------------------------------------
+
+A unit refers to simply a smallest piece of code which takes an input ,does certain operation, and gives an output.
+And testing this small piece of code is called Unit Testing.
+
+Nunit is the most-used testing Framework.
+
+What Is NUnit?
+
+NUnit is a unit-testing framework for all .Net languages.
+
+To start working with NUnit and writing the test, we need to follow the following steps:
+
+1. Create a test project
+2. Add a reference to NUnit library
+3. Add a reference to System under test project
+4. Create a test class and write the test method
+
+-  In the NuGet package manager, search for the NUnit and install "NUnit Test Adapter for VS" and "NUnit" in the project.
+
+Next, let us go ahead and create the Test Class and the Test Methods.  We need to use:
+
+1. TestFixture attribute to create the test class
+2. Test attribute to create the test method
+
+using NUnit.Framework;
+ 
+namespace Calculator.Tests
+{
+   [TestFixture]
+   public class CalculatorTest
+    {
+       [Test]
+       public void ShouldAddTwoNumbers()
+       {
+           ICalculator sut = new Calculator();
+           int expectedResult = sut.Add(7, 8);
+           Assert.That(expectedResult, Is.EqualTo(15));
+       }
+ 
+       [Test]
+       public void ShouldMulTwoNumbers()
+       {
+           ICalculator sut = new Calculator();
+           int expectedResult = sut.Mul(7, 8);
+           Assert.That(expectedResult, Is.EqualTo(56));
+       }
+ 
+    }
+}
+
+
+Running the Test
+
+There are three options to run the test:
+
+1. By using the Visual Studio Test Explorer
+2. By using the NUnit GUI
+3. By using the NUnit command prompt
+
+
+

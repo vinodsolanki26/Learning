@@ -1,0 +1,1360 @@
+
+Main.ts -------->  app.module.ts -------------> app.components.ts  [ Angular Flow ]
+
+Default Port for Angular 4200.
+
+
+----------------------------------------------------------------------------------------------
+Question: Angular - Environment Setup
+----------------------------------------------------------------------------------------------
+Answer: 
+	- Nodejs    			(https://nodejs.org/en/download/)
+	- Npm
+	- Angular CLI			(https://cli.angular.io/)
+	- IDE for writing your code	(Visual Studio Code)
+
+
+To check if nodejs is installed on your system, type node –v in the terminal.
+
+		-----------------------------------------------
+		node –v
+		-----------------------------------------------
+
+Once nodejs is installed, npm will also get installed along with it. To check if npm is installed or not, type npm –v in the terminal.
+https://cli.angular.io/ of angular to get the reference of the command.
+
+Type npm install –g @angular/cli, to install angular cli on your system.
+		-----------------------------------------------
+		npm install -g @angular/cli
+		-----------------------------------------------
+
+
+----------------------------------------------------------------------------------------------
+Question: Angular CLI ?
+----------------------------------------------------------------------------------------------
+Answer: A command Line Interface for angular.
+
+The Angular CLI (Command Line Interface) creates, manages, builds and test your Angular projects.
+
+		-----------------------------------------------
+		npm install -g @angular/cli
+		-----------------------------------------------
+		ng new <MyFirstAngularApp>  // Create a new application
+		-----------------------------------------------
+		ng serve	// Run the project only
+		-----------------------------------------------
+		ng s -o		// Run and open in new browser
+		-----------------------------------------------
+		ng --version 
+		-----------------------------------------------
+
+
+You can find all possible blueprints in the table below:
+
+Scaffold	Usage
+-----------	-----------
+Component	ng g component my-new-component
+Directive	ng g directive my-new-directive
+Pipe		ng g pipe my-new-pipe
+Service		ng g service my-new-service
+Class		ng g class my-new-class
+Guard		ng g guard my-new-guard
+Interface	ng g interface my-new-interface
+Enum		ng g enum my-new-enum
+Module		ng g module my-module
+
+
+angular-cli will add reference to components, directives and pipes automatically in the app.module.ts.
+
+----------------------------------------------------------------------------------------------
+Question: What is Angular?
+----------------------------------------------------------------------------------------------
+Answer: 
+	- Angular is a TypeScript-based open-source web application framework, developed and maintained by Google.
+	- SPA (single Page Application)
+	- Bidirectional data binding.
+
+
+----------------------------------------------------------------------------------------------
+Question: Which of the Angular life cycle component execution happens when a data-bound input value updates?
+----------------------------------------------------------------------------------------------
+Answer: "ngOnChanges" is the life cycle hook that gets executed whenever a change happens to the data that was bound to an input. 
+
+
+----------------------------------------------------------------------------------------------
+Question: What is the sequence of Angular Lifecycle Hooks?
+----------------------------------------------------------------------------------------------
+Answer: OnChange()  ->  OnInit()  ->  DoCheck()  ->  AfterContentInit()  ->  AfterContentChecked()  ->  AfterViewInit()  ->  AfterViewChecked()  ->  OnDestroy(). 
+
+
+----------------------------------------------------------------------------------------------
+Question: Differentiate between Observables and Promises?
+----------------------------------------------------------------------------------------------
+Answer: Observables are lazy, which means nothing happens until a subscription is made. Whereas Promises are eager; which means as soon as a promise 
+is created, the execution takes place. Observable is a stream in which passing of zero or more events is possible and the callback is called for each 
+event. Whereas, promise handles a single event. 
+
+
+	Promise					Observable
+      -----------			   --------------------
+
+1. Not Cancellable			1. Can be cancelled using unsubscribe method anytime.
+2. Emits a single value only		2. Emits mltiple values.
+3. Does not provide any operator.	3. Provide map, foreach, Filter, Reduce, Retry, and Retrywhen Operators.
+
+Note :  - Observable is better, it has all promoses features plus extra features.
+	- both handle the asynchronous call only.
+
+
+----------------------------------------------------------------------------------------------
+Question: What Is Ng-Content?
+----------------------------------------------------------------------------------------------
+Answer: You use the "<ng-content></ng-content>" tag as a placeholder for that dynamic content, then when the template is parsed Angular will replace 
+that placeholder tag with your content.
+
+Think of it like curly brace interpolation, but on a bigger scale. 
+
+If you understand {{myValue}}, then you understand the basics of what ng-content does.
+
+
+----------------------------------------------------------------------------------------------
+Question: Files used in Angular App folder?
+----------------------------------------------------------------------------------------------
+Answer: 
+
+1. src folder: This is the folder which contains the main code files related to your angular application.
+-------------
+2. e2e : e2e stands for "end to end", this is the place where we can write the end to end test. 
+---------
+3. node_module : In this folder, you can find all the "third party libraries" on which the application may depend. This folder is purely for development.
+----------------
+4. package.json : package.json file is a standard file. Every node and Angular project contain this file. Basically, this file contains all information like name of the 
+---------------	  project, versions information, dependencies and dev-dependencies settings.
+
+5.Karma.conf.js : Karma.conf.js file is used to store the setting of Karma i.e. test cases.
+---------------
+6.tsconfig.json : tsconfig.json file has a bunch of settings for your TypeScript compiler, so your typescript compiler looks at the setting and based on these settings, compile your typescript code into javascript, so that browser can understand.
+---------------
+7.tslint.json : tslint.json file checks your TS code for readability, maintainability and functionality errors.
+---------------
+8.main.ts : main.ts file is a TypeScript file. It is the starting point of our application. Here, we can bootstrap (the process of initializing or loading) our main module using bootstrapModule method like,
+---------------		platformBrowserDynamic().bootstrapModule(AppModule);
+			
+9.favicon.ico : favicon.ico is an icon file which displays on the browser.
+---------------
+10.style.css : style.css is where we can add global styles for our applications.
+---------------
+11.test.ts : test.ts file is used for setting the testing environment
+---------------
+12.angular-cli.json : angular-cli.json is standard configuration file of your application
+---------------
+13.editorconfig : editorconfig file is used when you are working in a team environment. If you are working in a team environment then make sure that all developers 
+---------------  of a team use the same setting in this file.
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Basic Building Blocks of Angular?
+----------------------------------------------------------------------------------------------
+Answer:
+
+	- Modules
+    	- Components
+    	- Templates
+    	- Metadata
+    	- Data binding
+    	- Directives
+    	- Services
+    	- Dependency Injection
+
+
+----------------------------------------------------------------------------------------------
+Question: Component?
+----------------------------------------------------------------------------------------------
+Answer : - A component encapsulate the Data + HTML Markup + Logic of view.
+         - It is a basic building block of UI.
+	 - Reusable. 
+
+        --------	-------------		--------
+	  Data		HTML Template	  	 Logic
+	--------	-------------		--------
+
+ 		---------------------------
+		  ng g c <component_name>
+ 		---------------------------
+
+	- Every application have atleast one component. Which we call AppComponent OR root component.
+	- A real world angular app essentially a tree of component, starting from "App or root" component.
+
+	
+ 				-----------
+				    APP
+ 				------------
+
+ 		----------- 	-----------        -----------
+		  Navbar	     Mainbody	      Sidebar
+ 		------------ 	-----------        -----------		 
+			 
+  				-----------
+				    Course
+ 				------------
+
+  				-----------
+				    Rating
+ 				------------
+
+
+      	- Create a component
+	- Register it in module
+	- Add an element in an HTML markup.
+
+In angular we have "deorator" called Component that we can attach to a class to make that class a Component. 
+
+import { Component } from '@angular/core';
+
+@Component({
+   selector: 'app-root',
+   templateUrl: './app.component.html',
+   styleUrls: ['./app.component.css']
+})
+
+export class AppComponent {
+   title = 'Angular 4 Project!';
+   constructor() {}
+   ngOnInit() {}
+}
+
+
+Note : The ngOnInit function gets called by default in any component created. 
+
+
+----------------------------------------------------------------------------------------------
+Question: Module ?
+----------------------------------------------------------------------------------------------
+Answer : A module is a container for group of related components.
+         every angular app has atleat one module, which is called App Module.
+
+	---------	-----------	--------------		----------- 
+	Courses		Messaging	Instructor		Admin
+	---------	-----------	--------------		----------- 
+
+			-: UDEMY EXAMPLE :-
+
+	To be able to define modules we have to use the decorator "NgModule".
+
+
+	import { BrowserModule } from '@angular/platform-browser';
+	import { NgModule } from '@angular/core';
+	import { AppComponent } from './app.component';
+
+	@NgModule({
+   		declarations: [
+      			AppComponent
+   		],
+   		imports: [
+      			BrowserModule
+   		],
+   		providers: [],
+   		bootstrap: [AppComponent]
+	})
+
+	export class AppModule { }
+
+- The property "imports" expects an array of module.
+- The property "declarations" expects an array of components.
+- The bootsrap property is where we define the root components of our module.
+- providers will include the services created.
+
+
+----------------------------------------------------------------------------------------------
+Question: Services ?
+----------------------------------------------------------------------------------------------
+Answer : 
+	- When we want to share the common data across the application.
+	- Business Logic.
+	- For making any external interaction with REST Api.
+
+	---------------------------
+	    ng g s <myservice>
+	---------------------------
+
+
+	Following are the files created at the bottom - myservice.service.specs.ts and myservice.service.ts.
+
+	# myservice.service.ts
+
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class MyserviceService {
+   	constructor() { }
+}
+
+	Here, the Injectable module is imported from the @angular/core. It contains the @Injectable method and a class called MyserviceService. 
+	We will create our service function in this class.
+
+	Now, we need to include the service created in the main parent "app.module.ts".
+
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule} from '@angular/router';
+import { AppComponent } from './app.component';
+
+import { MyserviceService } from './myservice.service';
+
+@NgModule({
+   declarations: [
+      AppComponent
+   ],
+   imports: [
+      BrowserModule
+   ],
+   providers: [MyserviceService],
+   bootstrap: [AppComponent]
+})
+
+export class AppModule { }
+
+
+	We have imported the Service with the class name and the same class is used in the providers.
+
+ 	Let us see how we can access this function in the component class.
+
+	#app.component.ts
+
+import { Component } from '@angular/core';
+import { MyserviceService } from './myservice.service';
+
+@Component({
+   selector: 'app-root',
+   templateUrl: './app.component.html',
+   styleUrls: ['./app.component.css']
+})
+
+export class AppComponent {
+   title = 'Angular 4 Project!';
+   todaydate;
+   constructor(private myservice: MyserviceService) {}
+   ngOnInit() {
+      this.todaydate = this.myservice.showTodayDate();
+   }
+}
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Decorators ?
+----------------------------------------------------------------------------------------------
+Answer : Decorators are a new feature of TypeScript and used throughout the Angular code, They are just functions that 
+can be used to add meta-data, properties or functions to the thing they are attached to.
+
+With decortors we can configure and cutomize our classes at design time.
+
+- These are prefix with @ symbol.
+- Angular has build in decorator like "Component" for defining component.
+
+Types of decorators : 
+
+@NgModule, 
+@Components, 
+@Injectable, 
+@Pipe, 
+@Input, 
+@Output, 
+@Contentchild, 
+@ContentChildren, 
+@ViewChild, 
+@ViewChildren
+
+
+----------------------------------------------------------------------------------------------
+Question: Directives ?
+----------------------------------------------------------------------------------------------
+Answer : There are three kinds of directives in Angular :
+	
+	1) Components : Components directive with a template.
+	
+	2) Structural Directive : Change the DOM layout by adding and removing DOM elements. (+)(-)
+
+	Example : ngFor, ngIf, ngSwitch, ngClass, ngStyle	
+
+	3) Attribute Directives : Attribute directive manipulate the DOM by changing its behaviour and appearance.
+				  We use attribute directive to apply conditional style to element, Show, Hide elements OR dynamically change the behaviuor
+				  of a component according  to a changing property.
+  
+
+
+----------------------------------------------------------------------------------------------
+Question: Template ?
+----------------------------------------------------------------------------------------------
+Answer : A template is an HTML snippet that tells Angular how to render the component in angular application.
+
+import { Component } from '@angular/core';
+
+@Component({
+   selector: 'app-root',
+   templateUrl: './app.component.html',
+   styleUrls: ['./app.component.css']
+})
+
+export class AppComponent {
+   title = 'Angular 4 Project!';
+   constructor() {}
+   ngOnInit() {}
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Dependency Injection ?
+----------------------------------------------------------------------------------------------
+Answer : When we use "new" operator inside a class you have tightly class to that implementation, you can not change it at runtime.
+	But when you add that dependency as a parameter of a constructor you have decouple that class from the dependency.
+
+        "In angular dependency injection framework build into it"
+
+	Dependency Injection means injecting or providing the dependency of a class into it's constructor.
+
+
+Here’s for example how you would define an injectable service. Pay special attention to the highlighted parts:
+
+#Service: popcorn.service.ts
+
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class PopcornService {
+
+  constructor() {
+    console.log("Popcorn has been injected!");
+  }
+
+  cookPopcorn(qty) {
+    console.log(qty, "bags of popcorn cooked!");
+  }
+
+}
+
+
+And here’s how you would inject our Popcorn service it in a component:
+
+#Component: app.component.ts
+
+import { Component } from '@angular/core';
+import { PopcornService } from './popcorn.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [PopcornService]
+})
+export class AppComponent {
+  constructor(private popcorn: PopcornService) {}
+
+  cookIt(qty) {
+    this.popcorn.cookPopcorn(qty);
+  }
+
+}
+
+
+-----------
+- : OR :-
+-----------
+
+We can register dependency somewhere in module "app.module.ts" .
+
+When we register the dependenncy as a provider in a module angular will create single instance of that class for that entire module.
+This is what we call Singleton pattern.
+
+	import { BrowserModule } from '@angular/platform-browser';
+	import { NgModule } from '@angular/core';
+	import { AppComponent } from './app.component';
+	import { PopcornService } from './popcorn.service';
+
+	@NgModule({
+   		declarations: [AppComponent],
+   		imports: [BrowserModule],
+   		providers: [PopcornService],
+   		bootstrap: [AppComponent]
+	})
+
+	export class AppModule { }
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Data Binding?
+----------------------------------------------------------------------------------------------
+Answer : (1) One way Binding (2) Two Way Binding
+
+	(1) One way Binding : From Compenent to template OR from template to component class.
+	-----------------     In one-way data binding, the template expression {{}} and square braces [] are used to bind a property to the DOM.
+
+	(A) From Component to template
+	    (i) Interpolation
+	    (ii) Property Binding
+
+	Interpolation : We can use interpolation {{ }} to evaluate expression. The easiest way to display a component property is to bind the property 
+	-------------	name through interpolation. Using it, we can call our custom method also.
+
+	Property Binding :  Property binding is the primary way of binding data in Angular. 
+	-----------------   The square braces are used to bind data to a property of an element, the trick is to put the property onto the 
+			    element wrapped in brackets: [property].
+
+
+		class {
+    			this.srcURL = "http://pexels/image.jpg";
+			this.isDisabled:boolean=true;
+		}
+
+			<img [src]="srcURL" />
+     			<button [disabled]="isDisabled">OK </button>
+
+			<img src="http://pexels/image.jpg" />
+			-------------	
+	
+
+				The src property of the HTMLElement img is bound to the srcURL property of the class. 
+
+	(B) From Template to Component
+	     (i) Event Binding
+	    (ii) Class Binding
+
+	Event Binding : In angular we have event binding raised from the DOM like - Click, Key Strockes, Mouse Movement.
+        --------------- Some time we need to access to the event object that was raised in the event handler. For Example : Mouse movement need x,y dimension.
+	
+	$event object something known to angular, $event represent a DOM event that standard DOM we see in javascript and Jquery.
+
+	In the "app.component.html" file, we have defined a button and added a function to it using the click event.
+		<button (click)="myClickFunction($event)"> Click Me </button>
+
+	The function is defined in the .ts file: app.component.ts
+
+		import { Component } from '@angular/core';
+
+		@Component({
+   			selector: 'app-root',
+   			templateUrl: './app.component.html',
+   			styleUrls: ['./app.component.css']
+		})
+
+		export class AppComponent {
+
+   			myClickFunction(event) { 
+      				//just added console.log which will display the event details in browser on click of the button.
+      				alert("Button is clicked");
+      				console.log(event);
+   			}
+		}
+
+	Class Binding : It is used when we want to apply any CSS class dynamically OR based on some condition.
+	--------------- You provide a class name with class.className between brackets in your templates and then an expression on the right that 
+			should evaluate to true or false to determine if the class should be applied.
+
+<div [class.active]="isActive">
+  ...
+</div>
+
+			#NgClass for multiple classes :::
+
+			When multiple classes should potentially be added, the NgClass directive comes in really handy. NgClass should receive an object 
+			with class names as keys and expressions that evaluate to true or false as values:
+
+<div [ngClass]="myClasses">
+  ...
+</div>
+
+
+			And then myClasses would be a property in the component that contains an object that looks like this:
+
+myClasses = {
+  important: this.isImportant,
+  inactive: !this.isActive,
+  saved: this.isSaved,
+  long: this.name.length > 6
+}
+
+			Of course the object can also be the return value of a method:
+
+
+<div [ngClass]="setMyClasses()">
+  ...
+</div>
+			In the associated component class
+
+
+setMyClasses() {
+  let classes = {
+    important: this.isImportant,
+    inactive: !this.isActive,
+    saved: this.isSaved,
+    long: this.name.length > 6
+  };
+  return classes;
+}
+
+
+
+		Style Binding : It is similar to classs binding, It's easy to bind inline style in your Angular templates. 
+		---------------
+
+<p [style.background-color]="'darkorchid'">
+  Quite something!
+</p>
+
+
+		And here’s how you would conditionally set a style value depending on a property of the component:
+
+<p [style.font-size.px]="isImportant ? '30' : '16'">
+  Some text that may be important.
+</p>
+
+
+		#NgStyle for multiple values::
+
+<p [ngStyle]="myStyles">
+  You say tomato, I say tomato
+</p>
+
+		And then myStyles would be a property in the component that contains an object with css property names as the keys, like this:
+
+myStyles = {
+'background-color': 'lime',
+'font-size': '20px',
+'font-weight': 'bold'
+}
+
+
+
+	(2) Two Way Binding : Two way binding in angular will help users to exchange data from the component to view and from view to component.
+	-------------------   It will help users to establish communication Bi-Directionally.
+
+				[] Property Binding
+				() Event Binding
+
+				[()] - Two way data binding - Banana in a Box 
+
+	Two way data binding cab be achieved using a "ngModel" directive in angular.
+		
+				<input type="text" [(ngModel)]='val'/>
+
+IMP Note : Before using ngModel, it's very important to import the "FormModule" from "@angular/forms" in app.module.ts file.
+----------
+
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { FormsModule } from '@angular/forms'
+
+import { AppComponent } from './app.component'
+
+@NgModule({
+  imports: [BrowserModule, FormsModule],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+
+
+				In order to understand what that means, let’s take a look at this code snippet here:
+
+
+import { Component } from '@angular/core'; 
+ @Component({ 
+   selector: 'app-example', 
+   template: ` 
+               Enter the value  : <input [(ngModel)] ='val'> 
+               <br> 
+                Entered value is:  {{val}} 
+             ` 
+}) 
+export class AppComponent { 
+   val: string = ''; 
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Template Variable?
+----------------------------------------------------------------------------------------------
+Answer : 
+	- It is used to get the information of any element in your document.
+	- Template variable declare using # key.
+	- Can pass a variable as a parameter on an event.
+
+
+import { Component } from '@angular/core'; 
+ @Component({ 
+   selector: 'app-example', 
+   template: ` 
+               Enter the value  : <input #email (keyup.enter)="OnKeyUp(email.value)"> 
+             ` 
+}) 
+export class AppComponent { 
+        
+	OnKeyUp(email){
+		console.log(email);
+	}
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Adding Bootsrap?
+----------------------------------------------------------------------------------------------
+Answer : Bootsrap basically a css library that gives your application modern look and fill.
+	1. Adding reference CDN link.
+	2. Install using npm.
+
+	----------------------------
+	npm install bootsrap --save
+	----------------------------
+
+	Now, go to package.json in the list of dependencies we have an entry for bootsrap.
+
+	Note : Add bootstrap.css in angular.json file and don't forget to restrat the server.
+
+        Example : "styles":[
+			"src/styles.css",
+			"node_modules/bootstrap/dist/css/bootsrap.min.css"
+		  ]
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Pipes?
+----------------------------------------------------------------------------------------------
+Answer : It is another building block in angular. We used pipe to format data before it get display on browser screen. 
+
+	Build-in pipes 	| Uppercase
+			| Lowercase
+			| Decimal
+			| Currency
+			| Percent
+			| Slice
+			| Date
+			| Json
+			
+
+	Example : 
+			<b>{{title | uppercase}}</b><br/>
+			<b>{{title | lowercase}}</b>
+
+			<h1>Currency Pipe</h1>
+      			<b>{{6589.23 | currency:"USD"}}</b><br/>
+      			<b>{{6589.23 | currency:"USD":true}}</b> //Boolean true is used to get the sign of the currency.
+      
+      			<h1>Date pipe</h1>
+      			<b>{{todaydate | date:'d/M/y'}}</b><br/>
+      			<b>{{todaydate | date:'shortTime'}}</b>
+
+
+----------------------------------------------------------------------------------------------
+Question: Custom Pipes?
+----------------------------------------------------------------------------------------------
+Answer : (1) To create a custom pipe, we have created a new ts file.
+	 (2) To create a custom pipe, we have to import Pipe and Pipe Transform from Angular/core.
+
+
+import {Pipe, PipeTransform} from '@angular/core';
+@Pipe ({
+   name : 'sqrt'
+})
+export class SqrtPipe implements PipeTransform {
+   transform(val : number) : number {
+      return Math.sqrt(val);
+   }
+}
+
+	
+	Here, we want to create the sqrt custom pipe.
+	As we proceed further, we have to create the class and the class name is SqrtPipe. This class will implement the PipeTransform.
+
+	(3) Since we have created a new file, we need to add the same in app.module.ts.
+
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+
+import { SqrtPipe } from './app.sqrt';
+
+@NgModule({
+   declarations: [
+      SqrtPipe,
+      AppComponent,
+   ],
+
+   imports: [
+      BrowserModule
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+	(4) Let us now see the call made to the sqrt pipe in the app.component.html file.
+
+<h1>Custom Pipe</h1>
+<b>Square root of 25 is: {{25 | sqrt}}</b>
+<br/>
+<b>Square root of 729 is: {{729 | sqrt}}</b>
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Attribute Binding?
+----------------------------------------------------------------------------------------------
+Answer : Attribute binding is used to bind an attribute property of a view element. 
+
+Attribute binding syntax is like property binding. In property binding, we only specify the element between brackets. 
+But in the case of attribute binding, it starts with the prefix attar, followed by a dot (.), and the name of the attribute.
+
+Let's consider an example where we are creating a table and setting the colspan attribute of the element. Here, we are 
+setting the colspan to 3 by binding value to attr.colspan attribute property
+
+import { Component } from "@angular/core";
+
+@Component({
+  selector: 'app-example',
+  template: `
+             <div>
+             <table>
+             <tr><td [attr.colspan]="3">three</td></tr>
+             <tr><td>1</td><td>2</td><td>3</td></tr>
+             </table>
+             </div>
+             `
+})
+export class ExampleComponent {
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Hidden Property?
+----------------------------------------------------------------------------------------------
+Answer : - If condition is false in "ngIf" then element is removed form the DOM.
+	 - *ngIf better for large elememnt and in hidden its only add hidden attribute to element and not removed from DOM.	
+
+<div [hidden]="course.length==0">
+	List of courses
+</div>
+
+<div [hidden]="course.length>0">
+	No course yet
+</div>
+
+
+Question: ngFor, ngIf, ngSwitch
+Answer :
+		Standard *ngIf in Angular
+
+
+@Component({
+  selector: 'app',
+  template: `
+    <div>
+      Welcome back. Congrats.
+    </div>
+  `,
+})
+export class AppComponent {
+  isLoggedIn = true;
+}
+
+
+		We can also use JavaScript-like expressions to achieve a final truthy/falsy value to supply to ngIf
+
+<!-- negated variable to achieve "if not" -->
+<div *ngIf="!isLoggedIn">
+  Please login, friend.
+</div>
+
+<!-- logic && operator -->
+<div *ngIf="isLoggedIn && !isNewUser">
+  Welcome back, friend.
+</div>
+
+<!-- logic OR operator -->
+<div *ngIf="isLoggedIn || isNewUser">
+  Welcome!
+</div>
+
+		*ngIf and Else
+
+<div *ngIf="isLoggedIn; else loggedOut">
+  Welcome back, friend.
+</div>
+
+<ng-template #loggedOut>
+  Please friend, login.
+</ng-template>
+
+
+		We use the <ng-template> because much like it’s HTML5 counterpart <template>, it’s also considered “virtual”.
+		Being “virtual” means the <ng-template> contents won’t actually exist in the compiled DOM, until it’s needed. 
+		When it’s needed (for example the “else” expression kicks into play), Angular will grab the contents of the <ng-template> tag, and 
+		replace the *ngIf contents with it.
+
+		That’s it. It’s just a virtual container that won’t render any contents until it’s ready.
+
+
+		ngIf and ng-template
+				It’s all about sugar syntax. When we do this:
+
+<div *ngIf="isLoggedIn">
+  Welcome back, friend.
+</div>
+		With our new found knowledge, we can now understand that it’s equivalent to this:
+
+<ng-template [ngIf]="isLoggedIn">
+  <div>
+    Welcome back, friend.
+  </div>
+</ng-template>
+
+		We can supply ngIf, ngIfElse (and ngIfThen) the same way:
+
+<ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+  <div>
+    Welcome back, friend.
+  </div>
+</ng-template>
+
+<ng-template #loggedOut>
+  <div>
+    Please friend, login.
+  </div>
+</ng-template>
+
+
+		#what ngFor does and what is its syntax
+
+<tr *ngFor="let hero of heroes; let i = index">
+    <td>{{hero.name}}</td>
+    <td>{{i}}</td>
+</tr>
+
+
+----------------------------------------------------------------------------------------------
+Question: ngFor and TrackBy?
+----------------------------------------------------------------------------------------------
+Answer : (1) ngFor Perform purely with large data set.
+	 (2) Angular is going to reconstruct this entire DOM object tree, It is costly when you deal with large complex list.
+
+         Solution : TrackBy
+
+	Using a TrackBy with ngFor directive we can able to regognize the change in data set and we can reuse the DOM element and recreate only when we add new 
+	additional elements.  
+
+Note : The use of trackBy it's a performance optimization and is usually not needed by default, it's in principle only needed if running into performance issues.
+
+
+@Component({
+    selector:'heroes',
+    template: `
+    <table>
+        <thead>
+            <th>Name</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let hero of heroes; trackBy: trackHero" >
+                <td>{{hero.name}}</td>
+            </tr>
+        </tbody>
+    </table>
+`
+})
+export class Heroes {
+
+    heroes = HEROES;
+
+    trackHero(index, hero) {
+        console.log(hero);
+        return hero ? hero.id : undefined;
+
+    }
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Component Integration?
+----------------------------------------------------------------------------------------------
+
+Answer : (@Input, @OutPut, Event emitter)
+When we have parent and child relationship between the components. also, parent and child component want to send data between each other we can use
+@Input and @Output decorators.
+
+Note : @Input and @Output decorators can only be use when we have parent and child relation between the component OR when two component are nested they
+       only we can able to send same data.
+
+@Input - Parent to Child
+@Output - child to Parent
+
+
+		      App Component
+			|	|
+	----------------|-------|----------------
+	|	--------|-------|--------	|
+	|	    First Component		|
+	|	------------------------	|
+	|					|
+	|	------------------------	|
+	|	    Second Component		|
+	|	------------------------	|
+	-----------------------------------------
+
+(A) Input Example :
+
+	(i) Parent.Component.html
+	
+		<h1> Pass Data From "Parent" to "Child" </h1>
+
+		<input type="text" [(ngModel)]="messageToSendP">
+		<span> Message is : {{messageToSendP}} </span>
+
+		<app-child [receivedParentMessage]="messageToSendP"></app-child>
+
+	(ii) Parent.Component.ts
+
+		export class ParentComponent implements OnInit {
+			
+			messageToSendP : string = "Hello, This message from parent";
+			
+			ngOnInit() {
+			}
+		}
+
+	(iii) Child.Component.html
+
+		{{receivedParentMessage}}
+
+	(iv) Child.Component.ts
+
+		imports {Component, Input} from '@angular/core';
+		export class ChildComponent implements OnInit {
+			@Input() receivedParentMessage:string
+		}
+
+(A) Output Example : 
+
+	(i) Child.Component.html
+
+		<button (click)="SendMessageToParent()" > SEND MSG TO PARENT </button>
+
+	(ii) Child.Component.ts
+
+		import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+		export class ChildComponent implememnts OnInit {
+		
+			@Output messageToEmit = new EventEmitter<string>();
+
+			SendMessageToParent() {
+				this.messageToEmit.emit("This message from child");
+			}
+		}	
+
+	(iii) Parent.Component.html
+
+		<app-child (messageToEmit) = "getMessage($event)"><app-child>
+
+		{{receivedChildMessage}}
+
+	(iv) Parent.Component.ts
+
+		export class ParentComponent implememnts OnInit {
+			
+			receivedChildMessage: string
+			getMessage(message:string){
+				this.receivedChildMessage = message;
+			}
+		}	
+
+
+----------------------------------------------------------------------------------------------
+Question: Event Emitter?
+----------------------------------------------------------------------------------------------
+Answer : If you want your component to notify his parent about something, you can use the "Output" decorator with "Event Emitter" to create a custom event.
+
+Note : If it's not a parent child relationship, then you have to use subjects OR through a commonn services.
+
+
+----------------------------------------------------------------------------------------------
+Question: The Leading Asterisk (*) ?
+----------------------------------------------------------------------------------------------
+Answer : when we use the leading astersik (*) with structural directives like : ngIf, ngFor and ngSwitchCase angular is going to rewrite the block using an 
+	ng-template.
+
+
+----------------------------------------------------------------------------------------------
+Question: Safe Traversal Operator?
+----------------------------------------------------------------------------------------------
+Answer : 
+	(i) app.component.html
+
+	<span> {{ task.assignee?.name }} </span> 
+	
+	(ii) app.Component.ts
+
+	export class AppComponent {
+		task = {
+			title = "Review App",
+			assignee : {
+				name : 'John'
+			}
+		}
+	}
+
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Http?
+----------------------------------------------------------------------------------------------
+Answer : 
+
+	(1) import "HttpCientModule" in app.module.ts
+
+	(2) import "HttpClient" in the service
+
+	(3) In service inject "HttpClient" as dependency for service using constructor.
+
+	(4) Create a method and choose get/post
+
+
+
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/Common/http';
+import {Observable} from 'rxjs';
+import {Hoteldata} from '../model/Hoteldata';
+
+@Injectable ({
+	ProvidedIn:'root'
+}) 
+
+export class Hoteldataservice {
+	
+	private _url:string="assets/datajson/hotel.json";
+	
+	Constructor(private https:HttpClient){}
+
+	getHotelData():Observable<HotelData[]>{
+		return this.http.get<HotelData[]>(this._url);
+	}
+}
+
+
+----------------------------------------------------------------------------------------------
+Question: Injectable?
+----------------------------------------------------------------------------------------------
+Answer : If you want the Dependency Injection to work, you need to add a decorator on your class.
+	 The best practise is to add it on every service.
+
+
+----------------------------------------------------------------------------------------------
+Question: Observable?
+----------------------------------------------------------------------------------------------
+Answer : Observable provide support for passing message between "Publishers" and "Subscribers".
+
+	-------	      Mesaage		-------
+	   P	----------------------->   S
+	-------				-------
+
+	Observable are just that - think you wish to observe and take action on.
+	To use observable, Angular uses a third party library called Reactive Extension (RxJS).
+
+	import { Observable } from 'rxjs/observable';
+	
+	It helps in 	- Event Handling
+			- Asynchronous Programming
+			- Handling Multiple Values
+
+	Observables are lazy, which means nothing happens until a subscription is made.
+
+ERROR HANDLING : Because observable produce value asynchronously, try/catch will not effectively catch errors.
+		 Instead, you handle errors by specifying on error callback on the observer.
+
+		 An observable can either produce values (calling the next callback), or it can complete callinng either the complete OR Error callback.
+
+		myObservable.subscribe({
+			next(num) {consle.log('next number :'+ num)},
+			error(err) {console.log('Received an error ;' + err)}
+		})
+
+
+----------------------------------------------------------------------------------------------
+Question: Routing and Navigation?
+----------------------------------------------------------------------------------------------
+Answer: 
+	Steps - 1) Configure the routes
+		2) Add a router outlet
+		3) Add links
+
+Routing allow to change the content on the basis of URL. When you change the URL you can change the content by changing the component.
+
+We will create a seprate Routing module where we write all code specific to routing.
+
+Routing can be implemente using two ways : 
+	(1) At the time of creating new project we can select routing option which will create App Routing Module.
+	(2) If we want to add routing later in our project we can create routing module manually also.
+
+ Steps : (i) app-routing.module.ts
+	    
+  	     import {Routes, RouterModule} from '@angular/router';
+
+	(ii) Registr all component which are envolved in routing or navigation.
+
+       (iii) Register "app-routing.module.ts" module file in "app.module.ts" unser imports.
+
+	(iv) In "ForRoot" we pass array of route. Each route is an object with two properties.
+	     (A) Path (B) Component
+
+	(v) "**" represent Wildcard.
+
+	(vi) Add router outlet 
+
+
+	(A) app-routing.module.ts
+	-------------------------
+
+	import  {NgModule} from '@angular/core';
+	imports {Routes, RouterModule} from '@angular/router';
+	import 	{LoginComponent} from '.Component/Login/logincomponent';
+	import  {RegisterComponent } from '.Component/Register/registercomponent';
+	import  {HomeComponent} from '.Component/Home/homecomponent';
+	import 	{PageNotFoundComponent} from '.Component/PageNotFound/pagenotfoundcomponent';
+
+	Const routes : Routes = [
+	
+		{path : '', redirectTo: 'name', pathmatch = 'full'},
+		{path : 'home', Component: HomeComponent},
+		{path : 'login', Component: LoginComponent},
+		{path : 'register/:id', component: RegisterComponent},
+		{path : '**', component: PageNotFoundComponent}
+
+	];
+
+	@NgModule({
+		imports:[RouterModule.forRoot(routes)];
+		exports:[RouterModule]
+	
+	}) 
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Router Outlet?
+----------------------------------------------------------------------------------------------
+Answer : App.Component.html
+
+	<navbar></navbar>
+	<router-outlet></router-outlet>
+
+	Where angular router is going to display the component that is associated with the current route.
+	It is going to render component after this "router-outlet". So, it is going  to render inside these element.
+
+
+
+
+----------------------------------------------------------------------------------------------
+Question: Router Link?
+----------------------------------------------------------------------------------------------
+
+Disadvantage of anchor tag <a href="#">
+	- Page flicker, it will get blank for split second.
+	- All the resourses are redownloaded.
+	- Entire page is downloaded and angular app is reinitialized.
+	- With router link only content of the target page is downloaded.
+
+	<a routerLink="/post">POST</a>
+	
+	<a [routerLink]="['followers','follower.id']">
+
+
+----------------------------------------------------------------------------------------------
+Question: Router Link Active?
+----------------------------------------------------------------------------------------------
+
+<ul class="nav navbar-nav">
+	<li routerLinkActive="active current">
+		<a routerLink="/post">POST</post>
+	</li>		
+</ul>
+
+
+----------------------------------------------------------------------------------------------
+Question: Getting the Route Parameters?
+----------------------------------------------------------------------------------------------
+Answer : In order to access route parmeters we need to inject the activated route class in our constructor.
+ 	
+	(i) app.component.ts
+	
+	import { ActivatedRoute } from '@angular/router';
+	import { Component, OnInit} from '@angular/core';
+	
+	@Component({
+	
+		Selector:'',
+		templateUrl:'',
+		StyleUrl:''	
+	})
+
+	export class AppComponent implements OnInit {
+	
+		Constructor(private route:ActivatedRoute){}
+
+		ngOnInit(){
+			this.route.parammap.subscribe(param=>{
+				let id =+ param.get('id');
+				Console.log(id); 			
+			});		
+		}
+	}
+
+
+----------------------------------------------------------------------------------------------
+Question: Why Route Parameters are Observable?
+----------------------------------------------------------------------------------------------
+Answer : 
+		-------------	     Navigation 	---------------
+		 Component A ------------------------->	Component B
+		-------------				---------------
+
+In this case angular is going to destroy component remove it form DOM and is going to create initialize "Component B" and render it's template in the DOM.
+
+				     Navigation    ---------
+				-----------------------	    |	
+				      Component A     <-----
+				----------------------- 
+		
+			-------------------------------------------------
+			|	Transaction : # 1234		        |  Real World 
+			|	:::::::::::::::::::::			|  Example
+			|						|
+			|   << Previus			Next >>		|
+			|						|	
+			-------------------------------------------------
+
+In this type of scenario angular is not going to destroy this component and is going to keep it in DOM.
+This is the reason why route parameters are observable. 
+
+
+----------------------------------------------------------------------------------------------
+Question: Route with multiple parameters?
+----------------------------------------------------------------------------------------------
+Answer : (A) app-routing.module.ts
+
+	{
+		path:'followers/:id/:username', Component:AppComponent
+	}
+
+	(B) app.component.html
+	<a [routerLink]="['./follwers',follower.id,folowwer.login]"	
+
+
+----------------------------------------------------------------------------------------------
+Question: Query parameters?
+----------------------------------------------------------------------------------------------
+Answer : *Optional parameter in route
+
+	<a routerLink="followers"
