@@ -1,0 +1,512 @@
+
+------------------------------------------------------------------------------------------------------------------------------
+1.  Explain in which assembly is the MVC framework is defined?
+------------------------------------------------------------------------------------------------------------------------------
+
+The MVC framework is defined in System.Web.Mvc.
+
+
+------------------------------------------------------------------------------------------------------------------------------
+2.   Mention what is the difference between “ActionResult” and “ViewResult” ?
+------------------------------------------------------------------------------------------------------------------------------
+
+“ActionResult” is an abstract class while “ViewResult” is derived from “AbstractResult” class.  
+“ActionResult” has a number of derived classes like “JsonResult”, “FileStreamResult” and “ViewResult” .
+
+“ActionResult” is best if you are deriving different types of view dynamically.
+
+
+------------------------------------------------------------------------------------------------------------------------------
+2.   List out few different return types of a controller action method?
+------------------------------------------------------------------------------------------------------------------------------
+
+    ViewResult
+    PartialViewResult
+    EmptyResult
+    RedirectResult
+    RedirectToRouteResult
+    JsonResult
+    JavaScriptResult
+    ContentResult
+    FileContentResult
+    FileStreamResult
+    FilePathResult
+
+
+------------------------------------------------------------------------------------------------------------------------------
+3.  Explain what are the steps for the execution of an MVC project?
+------------------------------------------------------------------------------------------------------------------------------
+
+The steps for the execution of an MVC project includes
+
+Receive first request for the application
+
+1. Routing
+2. MvcHandler
+3. Controller
+4. Action Execution
+5. View Result
+6. View Engine
+7. View
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+4.  Mention what is the difference between Temp data, View Data, and View Bag?
+------------------------------------------------------------------------------------------------------------------------------
+
+    Temp data: It helps to maintain data when you shift from one controller to other controller.
+    View data: It helps to maintain data when you move from controller to view
+    View Bag: It’s a dynamic wrapper around view data
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+5. What is partial view in MVC?
+------------------------------------------------------------------------------------------------------------------------------
+
+Partial view in MVC renders a portion of view content. It is helpful in reducing code duplication. In simple terms, partial view allows to render a view 
+within the parent view.
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+6.   Mention what is the importance of NonActionAttribute?
+------------------------------------------------------------------------------------------------------------------------------
+
+All public methods of a controller class are treated as the action method if you want to prevent this default method then you have to assign the public
+ method with NonActionAttribute.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Authentication: It is a process of verification that verifies “Who you are” (it confirms that you are a valid (or invalid) user). 
+
+Authorization: It is a process of verification that verifies “What to do” (It confirms you are permissible to do (or not to do) that).
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+1. Difference between Asp.Net MVC and Web Forms
+------------------------------------------------------------------------------------------------------------------------------
+
+				Asp.Net Web Forms										Asp.Net MVC
+			-----------------------------------------------------------------------------------------
+		
+		1. Asp.Net Web Form has server controls.			   			Asp.Net MVC has html helpers.
+
+		2. Asp.Net Web Form supports view state for						Asp.Net MVC does not support view state.
+ 		   state management at client side.
+
+		3. Asp.Net Web Form has file-based URLs means file name 		Asp.Net MVC has route-based URLs means URLs are 
+		   exist in the URLs must have its physically existence.		divided into controllers and actions and moreover it is 
+											                            based on controller not on physical file.
+
+
+SoC – Separation of Concerns
+--------------------------------
+Separation of Concern is one of the core advantages of ASP.NET MVC. The MVC framework provides a clean separation of the UI , Business Logic , Model or Data.
+
+More Control
+--------------------------------
+The ASP.NET MVC framework provides more control over the HTML, JavaScript and CSS than the traditional Web Forms.
+
+Testability
+--------------------------------
+ASP.NET MVC framework provides better testability of the Web Application and good support for the test driven development too.
+
+Lightweight
+--------------------------------
+ASP.NET MVC framework doesn’t use View State and thus reduces the bandwidth of the requests to an extent.
+
+Full features of ASP.NET
+--------------------------------
+One of the key advantages of using ASP.NET MVC is that it is built on top of ASP.NET framework and hence most of the features of the ASP.NET 
+like membership providers, roles etc. can still be used.
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+What are HTML Helpers in MVC?
+------------------------------------------------------------------------------------------------------------------------------
+
+HTML Helpers are like controls in traditional web forms. But HTML helpers are more lightweight compared to web controls as it does not hold viewstate and events.
+HTML Helpers returns the HTML string which can be directly rendered to HTML page. Custom HTML Helpers also can be created by overriding “HtmlHelper” class.
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+23) What are AJAX Helpers in MVC?
+------------------------------------------------------------------------------------------------------------------------------
+
+AJAX Helpers are used to create AJAX enabled elements like as Ajax enabled forms and links which performs the request asynchronously and 
+these are extension methods of AJAXHelper class which exists in namespace - System.Web.Mvc.
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+24) What are the options can be configured in AJAX helpers?
+------------------------------------------------------------------------------------------------------------------------------
+
+Below are the options in AJAX helpers –
+
+    Url – This is the request URL.
+    Confirm – This is used to specify the message which is to be displayed in confirm box. 
+    OnBegin – Javascript method name to be given here and this will be called before the AJAX request.
+    OnComplete – Javascript method name to be given here and this will be called at the end of AJAX request.
+    OnSuccess - Javascript method name to be given here and this will be called when AJAX request is successful.
+    OnFailure - Javascript method name to be given here and this will be called when AJAX request is failed.
+    UpdateTargetId – Target element which is populated from the action returning HTML.
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Html.Partial											Html.RenderPartial
+------------------------------------------------------------------------------------------------------------------------------
+
+Html.Partial returns html string. 					Html.RenderPartial returns void.
+
+Performance is slow.								Perform is faster compared with HtmlPartial().
+
+Html.Partial injects the html string of the 		Html.RenderPartial writes html in the response stream
+partial view into the main view.
+
+@Html.Partial("TestPartialView")					@{Html.RenderPartial("TestPartialView"); }
+
+
+------------------------------------------------------------------------------------------------------------------------------
+2. What is Bundle?
+------------------------------------------------------------------------------------------------------------------------------
+
+A bundle is a logical group of files that is loaded with a single HTTP request. 
+You can create style and script bundle for css and javascripts respectively by 
+calling BundleCollection class Add() method with in BundleConfig.cs file.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+3. Minification ?
+------------------------------------------------------------------------------------------------------------------------------
+
+Minification is technique for removing unnecessary characters (like white space, newline, tab) and 
+comments from the JavaScript and CSS files to reduce the size which cause improved load times of a webpage.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Explain the new features added in version 4 of MVC (MVC4)?
+------------------------------------------------------------------------------------------------------------------------------
+
+Following are features added newly –
+
+    Mobile templates
+    Added ASP.NET Web API template for creating REST based services.
+    Asynchronous controller task support.
+    Bundling the java scripts.
+    Segregating the configs for MVC routing, Web API, Bundle etc.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+4. What’s New in ASP.NET MVC 5?
+------------------------------------------------------------------------------------------------------------------------------
+
+	1. Authentication filters 
+	--------------------------------
+	AuthenticationFilter has been introduced newly in ASP.NET MVC 5+ to provide fine-grain control
+ 	over how users are authenticated for controllers and action methods. 
+
+
+	2. Attribute Routing
+	--------------------------------
+	ASP.NET MVC5 and WEB API 2 supports a new type of routing, called attribute routing. 
+	In this routing, attributes are used to define routes. Attribute routing provides you more control over the 
+	URIs by defining routes directly on actions and controllers in your ASP.NET MVC application and WEB API.
+
+
+		[Route(“{action = TestCategoryList}”)] - Controller Level
+		[Route(“customers/{TestCategoryId:int:min(10)}”)] - Action Level
+
+
+
+
+	3. Default MVC Template replaced by Bootstrap
+
+
+	4. Filter overrides 
+	--------------------------------
+	ASP.NET MVC 5 has arrived with a very important feature called Filter Overrides. 
+	Using the Filter Overrides feature, we can exclude a specific action method or controller from the global filter or controller level filter. 
+
+
+	For example, if we created a controller-level action filter or global action filter, 
+	now I have an action method on which I do not want to action filter. In this case the Filter Override feature is very useful.
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+Filters in MVC?
+------------------------------------------------------------------------------------------------------------------------------
+
+ASP.NET MVC provides a simple way to inject your piece of code or logic either before or after an action is executed. 
+
+For example, If we need some action to be executed when the user has been authenticated then we can adorn the action with the [Authorize] attribute. 
+
+
+Type of filters :
+
+    1.Authorization filter
+    2.Action filter
+    3.Result filter
+    4.Exception filter
+
+
+
+When to use Filters?
+
+- Custom Authentication
+- Error handling or logging
+
+
+------------------------------------------------
+Authorization filter
+------------------------------------------------
+
+This filter provides authentication and authorization logic. It will be executed before the action gets executed. 
+
+
+public class CustomAuthorizationAttribute : FilterAttribute, IAuthorizationFilter
+{
+    void IAuthorizationFilter.OnAuthorization(AuthorizationContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnAuthorization = "IAuthorizationFilter.OnAuthorization filter called";
+    }
+}
+
+
+Built-in Filter ::
+ [Authorize], [RequireHttps] 
+ 
+------------------------------------------------
+Action filter
+------------------------------------------------
+
+This filter will be called before and after the action starts executing and after the action has executed. We can put our custom pre-processing 
+and post-processing logic in this filter.
+
+
+
+public class CustomActionAttribute : FilterAttribute, IActionFilter
+{
+    void IActionFilter.OnActionExecuted(ActionExecutedContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnActionExecuted = "IActionFilter.OnActionExecuted filter called";
+    }
+
+    void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnActionExecuting = "IActionFilter.OnActionExecuting filter called";
+    }
+}
+
+
+------------------------------------------------
+Result filter
+------------------------------------------------
+
+This filter will execute before and after the result of the action method has been executed. 
+  
+
+public class CustomResultAttribute : FilterAttribute, IResultFilter
+{
+    void IResultFilter.OnResultExecuted(ResultExecutedContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnResultExecuted = "IResultFilter.OnResultExecuted filter called";
+    }
+
+    void IResultFilter.OnResultExecuting(ResultExecutingContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnResultExecuting = "IResultFilter.OnResultExecuting filter called";
+    }
+}
+
+Built-in Filter ::
+	[OutputCache] 
+
+------------------------------------------------
+Exception filter
+------------------------------------------------
+
+This filter will be invoked whenever a controller or action of the controller throws an exception. 
+This is particularly useful when we need custom error logging module.
+
+public class CustomExceptionAttribute : FilterAttribute, IExceptionFilter
+{       
+    void IExceptionFilter.OnException(ExceptionContext filterContext)
+    {
+        filterContext.Controller.ViewBag.OnException = "IExceptionFilter.OnException filter called";
+    }
+}
+
+
+Built-in Filter ::
+		[HandleError] 
+
+
+
+Order of Execution
+------------------------------------------------------------------------------
+Now with all the above filters we have the following filter methods.
+
+    IAuthorizationFilter.OnAuthorization
+    
+    IActionFilter.OnActionExecuted
+    IActionFilter.OnActionExecuting
+
+    IResultFilter.OnResultExecuted
+    IResultFilter.OnResultExecuting
+    
+    IExceptionFilter.OnException
+
+
+
+
+
+------------------------------------------------------------------------------
+Register Filters
+------------------------------------------------------------------------------
+
+1. Global Level
+
+
+You can apply filters at global level in the Application_Start event of Global.asax.cs file by using default FilterConfig.RegisterGlobalFilters() mehtod.
+
+// MvcApplication class contains in Global.asax.cs file 
+public class MvcApplication : System.Web.HttpApplication
+{
+    protected void Application_Start()
+    {
+        FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    }
+}
+
+// FilterConfig.cs located in App_Start folder 
+public class FilterConfig
+{
+    public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+    {
+        filters.Add(new HandleErrorAttribute());
+    }
+}
+
+
+
+2. Controller level
+
+Filters can also be applied to the controller class. So, filters will be applicable to all the action method of Controller 
+class if it is applied to a controller class. 
+
+[HandleError]
+public class HomeController : Controller
+{
+    public ActionResult Index()
+    {
+        return View();
+    }
+
+}
+
+
+
+3. Action method level
+
+You can apply filters to an individual action method also. So, filter will be applicable to that particular action method only. 
+
+public class HomeController : Controller
+{
+    [HandleError]
+    public ActionResult Index()
+    {
+        return View();
+    }
+
+}
+
+-----------------------------------------------------------------------------------------------------------------
+How route table has been created in ASP.NET MVC?
+-----------------------------------------------------------------------------------------------------------------
+
+Method – “RegisterRoutes()” is used for registering the routes which will be added in “Application_Start()” method of global.asax file, 
+which is fired when the application is loaded or started.
+
+
+-----------------------------------------------------------------------------------------------------------------
+AREA
+-----------------------------------------------------------------------------------------------------------------
+
+ASP.NET MVC 2 introduced Area. Area allows us to partition large application into smaller units where each unit contains 
+separate MVC folder structure, same as default MVC folder structure. 
+
+Finally, all the area must be registered in Application_Start event in Global.asax.cs as
+
+ AreaRegistration.RegisterAllAreas();
+ 
+ 
+ -----------------------------------------------------------------------------------------------------------------
+ Speed Up Your ASP.NET MVC Application 
+ -----------------------------------------------------------------------------------------------------------------
+ 
+ General
+
+    - Run a profiler and find out unnecessary hits. Optimize all stored procedures which are taking more than 1 second to return a response.
+    
+	- Run your site in Release mode, not Debug mode, when in production, and also during performance profiling. Release mode is much faster.
+	Debug mode can hide performance problems in your own code.
+
+	- If you use Razor, add the following code in your global.asax.cs, by default, Asp.Net MVC renders with an aspx engine and a razor engine. 
+	This only uses the RazorViewEngine.
+
+		ViewEngines.Engines.Clear();
+		ViewEngines.Engines.Add(new RazorViewEngine());
+	
+ 1. Application Caching
+ 2. Optimize Your Images
+ 3. Bundle/Minify JavaScript/CSS
+ 4. Minimize Database Calls
+ 5. Use AJAX to update components of your UI, avoid a whole page update when possible.
+ 6. Use a compiled query.
+ 7. Load JavaScript last 
+		 This is because we want the page to render as quickly as possible, and JavaScript is not typically necessary for the initial render. 
+		 Users will typically take a moment to read the page and decide what to do next.
+ 
+ 

@@ -1,0 +1,702 @@
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. What is .NET Core?
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Ans: .NET Core is a newer version of .NET, which is cross-platform, supporting Windows, MacOS and Linux, and can 
+be used in device, cloud, and embedded/IoT scenarios.
+
+ASP.NET Core 1.0 is the next version of ASP.NET. It is open source and cross-platform framework (supports for Windows, Mac and Linux) suitable 
+for building cloud based internet connected applications like web apps, IoT apps and mobile apps. ASP.NET Core apps 
+can run on .NET Core or on the full .NET Framework.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. Difference between .NET Core and .NET Framework?
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Ans : First, let’s stop calling it ASP.NET 5. Now it is renamed to ASP.NET Core 1.0. So, .NET as whole now has 2 flavors.
+
+- .NET Framework
+- .NET Core
+
+Difference
+
+.NET Core and the .NET Framework have (for the most part) a subset-superset relationship. 
+.NET Core is named “Core” since it contains the core features from the .NET Framework, for both the runtime and framework libraries. 
+For example, .NET Core and the .NET Framework share the GC, the JIT and types such as String and List.
+
+.NET Core was created so that .NET could be open source, cross platform and be used in more resource-constrained environments.
+
+
+Where these 2 fits with ASP.NET
+Like .NET, ASP.NET now also has 2 flavors.
+
+ASP.NET 4.6
+ASP.NET Core 1.0
+
+ASP.NET 4.6 is upgraded version of ASP.NET which we all are using from last 13 years. It started with 1.0 back in 2012 and now it has reached at 4.6. 
+
+Applications built using ASP.NET 4.6 or prior version of ASP.NET run only on windows platform.
+
+ASP.NET Core 1.0 is completely a new platform to build cross platform applications and it was written from scrath. 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. Here is what’s changed in ASP.NET Core?
+-----------------------------------------------------------------------------------------------------------------------------------
+
+- The first and most important change is that “ASP.NET Core is open source and cross platform.”
+
+- ASP.NET Core works with two runtime environment (.NET Core and .NET Framework). .NET core is for all platforms (windows, linux and OSx) 
+where .NET framework is for windows.
+
+- ASP.NET Core project is now much cleaner. When you create a new project, it includes only required dependencies.
+
+- ASP.NET Core uses completely new light-weight and modular HTTP request pipeline.
+
+- HTTPHandler and HTTPModules are also gone. Now they are replaced with Middleware.
+
+- The heart of ASP.NET application “System.web” DLL is no longer available.
+
+- There is no web.config and global.asax files now. web.config is replaced with appsettings.json and global.asax is now Startup.cs. 
+	:- Startup.cs is entry point for application itself.
+
+- The new Project.json file is heart of your project. It defines dependencies, runtime to use, and defines build and publish setup. It defines 
+as project as DNX project.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. What is Startup.cs file in ASP.NET Core?
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Ans: In ASP.NET, Global.asax (though optional) acts as the entry point for your application. Startup.cs, it is entry point for application itself. 
+     The Startup class configures the request pipeline that handles all requests made to the application. 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. ASP.NET Core - Middleware
+-----------------------------------------------------------------------------------------------------------------------------------
+
+We as ASP.NET developers are quite familiar with HttpHandler and HttpModules but with this new version of ASP.NET, they are gone. 
+They are replaced with a new better, cleaner and easy to implement approach called “Middleware“. 
+
+A middleware is nothing but a component (class) which is executed on every request in ASP.NET Core application. 
+
+Middlewares build the request pipeline. 
+
+Typically, there will be multiple middleware in ASP.NET Core web application. It can be either framework provided middleware, added via NuGet or your own 
+custom middleware. 
+		We can set the order of middleware execution in the request pipeline. Each middleware adds or modifies http request and optionally 
+		passes control to the next middleware component. 
+
+
+You can use Middleware to implement various tasks when processing requests such as authentication, session state retrieval and persistence, logging and so on.
+
+The following figure illustrates the execution of middleware components.
+
+
+
+
+			| Middleware1 |		  	| Middleware2 |		  | Middlwware3 |
+
+Request
+----------->		Modify Request	 	----->	 Modify Request	 ----->    Modify Request	------>	App Code
+														|
+			Next()			 	 Next()							|
+														|
+Response													|
+<-----------		Modify Response		<-----	Modify Response	 <-----	   Modify Response	<-------
+
+
+
+
+
+The following figure illustrates the ASP.NET Core request processing.
+
+
+
+Request	     	
+-----------> 	      ------->		 ------->	  ------->		------->					------->
+	      
+		IIS	     	.Net Core	   Kestreal         Configure()			|Middleware1|--|Middleware2|		     App Code	
+				  CLR
+Response     	  
+<-----------          <------		  <------	  ------->    StartUp	<-------	     Request Pipeline		<--------
+
+
+
+
+
+-------------------------------------
+Configure Middleware
+-------------------------------------
+
+"The request pipeline is configured Here"
+
+We can configure middleware in the Configure method of the Startup class using IApplicationBuilder instance.
+
+Highlighted lines in below code, are built-in Middleware
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+    loggerFactory.AddDebug();
+ 
+    app.UseApplicationInsightsRequestTelemetry();
+ 
+    if (env.IsDevelopment())
+    {
+      ?  app.UseBrowserLink();
+      ?  app.UseDeveloperExceptionPage();
+      ?  app.UseDatabaseErrorPage();
+    }
+    else
+    {
+       ? app.UseExceptionHandler("/Home/Error");
+ 
+        // For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
+        try
+        {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
+                        .Database.Migrate();
+            }
+        }
+        catch { }
+    }
+ 
+    ? app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+    ? app.UseStaticFiles();
+    ? app.UseIdentity();
+ 
+    // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
+ 
+    ? app.UseMvc(routes =>
+    {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
+    });
+}
+
+
+
+The configure method above creates a request pipeline by adding middlewares. It first adds error pages in case of development environment or 
+error handler in case of production environment, then adds support for static files, ASP.NET Identity authentication, and finally, ASP.NET MVC. 
+The thing to note here is, by design for accessing static files (static content in wwwroot folder) no authentication is required. 
+Therefore, app.UseIdentity(); is added after app.UseStaticFiles(); middleware. If the request is for file other than static files then 
+it will flow to the next piece of middleware which is app.UseIdentity();.
+
+
+
+
+
+The followings are some built-in middleware:
+---------------------------------------------
+
+--------------------------------------------------------------------------
+Middleware						Description
+--------------------------------------------------------------------------
+Authentication					Adds authentication support.
+CORS						Configures Cross-Origin Resource Sharing.
+Routing						Adds routing capabilities for MVC or web form
+Session						Adds support for user session.
+StaticFiles					Adds support for serving static files and directory browsing.
+Diagnostics					Adds support for reporting and handling exceptions and errors.
+
+
+--------------------------------------------------------------------------
+Q.What ConfigureServices() method does in Startup.cs?
+--------------------------------------------------------------------------
+
+Ans: This method is optional. It is the place to add services required by the application. For example, if you wish to use Entity Framework 
+in your application then you can add in this method.
+
+public void ConfigureServices(IServiceCollection services)  
+{
+    services.Configure<AppSettings>(Configuration.GetSubKey("AppSettings"));
+    services.AddEntityFramework()
+            .AddSqlServer()
+            .AddDbContext<SchoolContext>();
+    // Add MVC services to the services container.
+    services.AddMvc();
+}
+
+
+--------------------------------------------------------------------------
+app.Use vs app.Run in ASP.NET Core middleware
+--------------------------------------------------------------------------
+
+Middleware are executed in the same order in which they are added. The difference is, 
+middleware defined using app.Use may call next middleware component in the pipeline.
+On the other hand, middlware defined using app.Run will never call subsequent middleware.
+
+
+The following example defines 2 inline middleware using "app.Use" and one using "app.Run". The first middleware defined using "app.Use" writes 
+HTML to response object asynchronously, calls next middleware and again writes closing HTML. And middleware defined using "app.Run" writes
+message and then returns. And after "app.Run" middlware, we defined another inline middleware using "app.Use" and also using some of the built-in middleware.
+
+
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+{
+    app.Use(async (context, next) =>
+    {
+        await context.Response.WriteAsync("<html><body>");
+        await context.Response.WriteAsync("<div>Inside middleware defined using app.Use</div>");
+        await next();
+        await context.Response.WriteAsync("</body></html>");
+    });
+ 
+    app.Run(async context => { 
+       await context.Response.WriteAsync("<div>Inside middleware defined using app.Run</div>"); 
+    });
+ 
+    app.Use(async (context, next) =>
+    {
+        await context.Response.WriteAsync("<html><body>");
+        await context.Response.WriteAsync("<div>Another Middleware defined using app.Use</div>");
+        await next();
+        await context.Response.WriteAsync("</body></html>");
+    });
+    app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+    app.UseStaticFiles();
+    app.UseIdentity();
+    app.UseMvc(routes =>
+    {
+        routes.MapRoute(
+            name: "default",
+            template: "{controller=Home}/{action=Index}/{id?}");
+    });
+}
+
+
+
+Result ::: 
+Inside middleware defined using app.Use
+Inside middleware defined using app.Run
+
+
+As I told you earlier, middleware defined after app.Run will not be executed. And that’s why you don’t get the response of second app.Use middleware.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Tag Helpers
+-----------------------------------------------------------------------------------------------------------------------
+
+Tag Helpers allow the developer to go back to using standard HTML tags in their views while still applying presentation logic written 
+in C# that runs on the web server.
+
+Tag Helpers are classes written in C# but are attached to HTML elements in order to run server-side code from Razor view. 
+
+Old .Net Syntax :::
+@Html.ActionLink("Forgot your password?", "ForgotPassword")
+
+ASP.NET CORE :::
+<a asp-page="./ForgotPassword">Forgot your password?</a> 
+
+
+Using Tag Helpers :::
+
+So, how do we go about using Tag Helpers? In order to use the inbuilt or custom Tag Helpers, one has to first reference 
+Tag Helper library named Microsoft.AspNetCore.Mvc.TagHelpers. 
+It can also be taken from Nuget. Once referenced, import it using @AddTagHelper directive as shown below inside _ViewImports.cshtml,
+
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers  
+
+
+whatever is referenced/imported inside _ViewImports.cshtml will be available for all the views. If you don't want any of your views to use
+ globally imported Tag Helpers, you can use @removeTagHelper in the respective view.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+How to disable Tag Helper at element level?
+------------------------------------------------------------------------------------------------------------------------------
+
+We can disable Tag Helper at element level using the opt-out character ("!"). This character must apply opening and closing the Html tag.
+
+Example
+ <!span asp-validation-for="phone" class="divPhone"></!span>
+
+-----------------------------------------------------------------------------------------------------------------------------------
+Q. ASP.NET Core - Dependency Injection?
+-----------------------------------------------------------------------------------------------------------------------------------
+
+ASP.NET Core is designed from scratch to support Dependency Injection. ASP.NET Core injects objects of dependency classes through constructor 
+or method by using built-in IoC container.
+
+
+Built-in IoC Container:::
+-------------------------
+
+ASP.NET Core framework contains simple out-of-the-box IoC container, The built-in container is represented by "IServiceProvider" implementation 
+that supports "constructor injection" by default. 
+
+The types (classes) managed by built-in IoC container is called services.
+
+There are basically two types of services in ASP.NET Core:
+
+1. Framework Services: Services which are a part of ASP.NET Core framework such as IApplicationBuilder, IHostingEnvironment, ILoggerFactory etc.
+2. Application Services: The services (custom types or classes) which you as a programmer create for your application.
+
+
+In order to let the IoC container automatically inject our application services, we first need to register them with IoC container.
+
+Registering Application Service :::
+-------------------------------
+
+Consider the following example of simple ILog interface and its implementation class
+
+public interface ILog
+{
+    void info(string str);
+}
+
+class MyConsoleLogger : ILog
+{
+    public void info(string str)
+    {
+        Console.WriteLine(str);
+    }
+}
+
+
+ASP.NET Core allows us to register our application services with IoC container, in the "ConfigureServices" method of the "Startup" class. 
+The ConfigureServices method includes a parameter of "IServiceCollection" type which is used to register application services.
+
+
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+
+        services.Add(new ServiceDescriptor(typeof(ILog), new MyConsoleLogger()));        
+    }
+
+    // other code removed for clarity.. 
+}
+
+We have specified "ILog" as service type and "MyConsoleLogger" as its instance. This will register "ILog" service as a singleton by default.
+
+
+
+Understanding Service Lifetime
+-------------------------------
+
+Built-in IoC container manages the lifetime of a registered service type. It automatically disposes a service instance based on the specified lifetime.
+
+The built-in IoC container supports three kinds of lifetimes:
+
+1. Singleton: IoC container will create and share a single instance of a service throughout the application's lifetime.
+-------------
+2. Transient: The IoC container will create a new instance of the specified service type every time you ask for it.
+-------------
+3. Scoped: IoC container will create an instance of the specified service type once per request and will be shared in a single request.
+-------------
+
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.Add(new ServiceDescriptor(typeof(ILog), new MyConsoleLogger()));    // singleton
+    
+    services.Add(new ServiceDescriptor(typeof(ILog), typeof(MyConsoleLogger), ServiceLifetime.Transient)); // Transient
+    
+    services.Add(new ServiceDescriptor(typeof(ILog), typeof(MyConsoleLogger), ServiceLifetime.Scoped));    // Scoped
+}
+
+
+Extension Methods for Registration
+----------------------------------
+
+ASP.NET Core framework includes extension methods for each types of lifetime; AddSingleton(), AddTransient() and AddScoped() methods for singleton, transient 
+and scoped lifetime respectively.
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSingleton<ILog, MyConsoleLogger>();
+    services.AddSingleton(typeof(ILog), typeof(MyConsoleLogger));
+
+    services.AddTransient<ILog, MyConsoleLogger>();
+    services.AddTransient(typeof(ILog), typeof(MyConsoleLogger));
+
+    services.AddScoped<ILog, MyConsoleLogger>();
+    services.AddScoped(typeof(ILog), typeof(MyConsoleLogger));
+}
+
+
+----------------------------------------------------------------------------------
+Different configuration json files in ASP.net Core?
+----------------------------------------------------------------------------------
+
+There are mainly 6 configuration JSON files in ASP.net Core.
+
+1. global.json
+2. launchsettings.json
+3. appsettings.json
+4. bundleconfig.json
+5. project.json
+6. bower.json
+
+
+1. Global.json : As the name suggestes, You can define the solution level settings in global.json file. 
+----------------
+{
+  "projects": [ "src", "test" ],
+  "sdk": {
+    "version": "1.0.0-preview2-003121"
+  }
+}
+
+projects:: projects property defines the location of source code for your solution. It specifies two location for projects in the solution:: src and test.
+src contains actual application and test contains any test.
+
+
+2. launchsettings.json :
+------------------------
+In launchsettings.json file, You can define project specific settings associated with each profile.
+
+The most important point that you need to keep in mind is this "launchSettings.json" file is only used within the local development machine. 
+That means this file is not required when we publishing the asp.net core application to the production server.
+
+If you have certain settings and you want your application to use such settings when you publish and deploy your application to a production server, 
+then you need to store such settings in an appsettings.json file.
+
+{
+  "iisSettings": {
+    "windowsAuthentication": false, 
+    "anonymousAuthentication": true, 
+    "iisExpress": {
+      "applicationUrl": "http://localhost:59119",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "FirstCoreWebApplication": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+
+The point that you need to remember is when you run the application from Visual Studio either by pressing CTRL + F5 or just F5 then by default the 
+profile with “commandName”: “IISExpress” is going to be used. On the other hand, if you run the ASP.NET Core application 
+using .NET Core CLI (i.e. dotnet run command), then the profile with the “commandName”: “Project” is going to be used.  
+
+
+3. appsettings.json:
+--------------------
+ASP.NET stores application configuration settings in Web.config. ASP.NET Core uses AppSettings.json to store custom application setting, DB connection strings,
+Logging etc.
+
+{
+  "ApplicationInsights": {
+    "InstrumentationKey": ""
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
+
+
+4. bundleconfig.json:
+---------------------
+You can define the configuration for bundling and minification for the project.
+
+// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optinally generate .map file
+    "sourceMap": false
+  }
+]
+
+
+
+5. project.json:
+----------------
+Asp.net Core uses Project.JSON file for storing all project level configuration settings.The Project.json file stores configuration information in JSON format.
+
+{
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0",
+      "type": "platform"
+    },
+    "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Mvc": "1.0.0",
+    "Microsoft.AspNetCore.Razor.Tools": {
+      "version": "1.0.0-preview2-final",
+      "type": "build"
+    },
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "Microsoft.Extensions.Logging": "1.0.0",
+    "Microsoft.Extensions.Logging.Console": "1.0.0",
+    "Microsoft.Extensions.Logging.Debug": "1.0.0",
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0"
+  },
+ 
+  "tools": {
+    "BundlerMinifier.Core": "2.0.238",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
+  },
+ 
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
+    }
+  },
+ 
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "preserveCompilationContext": true
+  },
+ 
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
+    }
+  },
+ 
+  "publishOptions": {
+    "include": [
+      "wwwroot",
+      "Views",
+      "Areas/**/Views",
+      "appsettings.json",
+      "web.config"
+    ]
+  },
+ 
+  "scripts": {
+    "prepublish": [ "bower install", "dotnet bundle" ],
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
+  }
+}
+
+
+6. bower.json :
+---------------
+Bower is a package manager for the web. Bower manages components that contain HTML, CSS, JavaScript, fonts or even image files. Bower installs 
+the right versions of the packages you need and their dependencies. With ASP.NET core, jQuery and bootstrap packages are already installed 
+and bower, gulp and NPM are already in place.Client-side packages are listed in the bower.json file.
+ 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+What is Kestrel?
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Kestrel is a cross-platform web server built for ASP.NET Core based on libuv – a cross-platform asynchronous I/O library.
+
+Introduced new, fast and cross-platform web server - Kestrel. So, a web application can run without IIS, Apache, and Nginx.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+What about static files in ASP.NET Core (MVC)?
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+All static files are now (by default) located inside of wwwroot folder. You store your CSS, JS, images, fonts and others static content inside of it.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+What is routing in ASP.NET Core?
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Routing is functionality that map incoming request to the route handler. The route can have values (extract them from URL) that used to process the request. 
+Using the route, routing can find route handler based on URL. All the routes are registered when the application is started. There are two types of routing 
+supported by ASP.NET Core
+
+1. The conventional routing
+2. Attribute routing
+
+The Routing uses routes for map incoming request with route handler and Generate URL that used in response. Mostly, the application having a single collection 
+of routes and this collection are used for the process the request. The RouteAsync method is used to map incoming request (that match the URL) with available in 
+route collection.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+How to enable Session in ASP.NET Core?
+-----------------------------------------------------------------------------------------------------------------------
+The middleware for the session is provided by the package Microsoft.AspNetCore.Session. To use the session in ASP.NET Core application, we need to add this package to csproj file and add the Session middleware to ASP.NET Core request pipeline.
+
+ 
+ public class Startup
+ {
+ 	public void ConfigureServices(IServiceCollection services)
+ 	{
+ 	  ….
+ 	  ….
+ 	  services.AddSession();
+ 	  services.AddMvc();
+ 	}
+ 	public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+ 	{
+ 	  ….
+ 	  ….
+ 	  app.UseSession();
+ 	  ….
+ 	  ….
+ 	}
+ }
+
+
+-----------------------------------------------------------------------------------------------------------------------
+What are Razor Pages in ASP.NET Core?
+-----------------------------------------------------------------------------------------------------------------------
+This is a new feature introduced in ASP.NET Core 2.0. It follows a page-centric development model just like ASP.NET web forms. 
+It supports all the feature of ASP.NET Core.
+
+Example
+ @page 
+ <h1> Hello, Book Reader!</h1> 
+ <h2> This is Razor Pages </h2>
+
+The Razor pages start with the @page directive. This directive handle request directly without passing through the controller. 
+The Razor pages may have code behind file, but it is not really code-behind file. It is class inherited from PageModel class.

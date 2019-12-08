@@ -1,0 +1,210 @@
+
+## Why select Web API?
+
+    - It is used to create simple, non-SOAP-based HTTP Services
+	- It works the HTTP way using standard HTTP verbs like GET, POST, PUT, DELETE, etc. for all CRUD operations
+	- Complete support for routing
+	- Response generated in JSON or XML format using MediaTypeFormatter
+	
+## What are the advantages of Web API?
+
+Advantages of Web API are:
+
+    OData
+    Filters
+    Content Negotiation
+    Self-Hosting
+    Routing
+    Model Bindings
+
+
+## Web API uses which of the following open-source library for JSON serialization?
+
+Web API uses Json.NET library for JSON serialization.
+
+
+## By default, Web API sends HTTP response with which of the following status code for all uncaught exception?
+
+500 – Internal Server Error
+
+
+## What is Web API Routing?
+
+Routing is pattern matching like in MVC.
+
+All routes are registered in Route Tables.
+
+For example:
+
+	Routes.MapHttpRoute(
+ 
+	Name: "ExampleWebAPIRoute",
+ 
+	routeTemplate: “api/{controller}/{id}
+ 
+	defaults: new { id = RouteParameter.Optional}	
+	
+	
+## Explain exception filters?
+
+It will be executed when exceptions are unhandled and thrown from a controller method. 
+The reason for the exception can be anything. Exception filters will implement “IExceptionFilter” interface.	
+
+
+## How to register exception filter globally?
+
+It is possible to register exception filter globally using following code-
+
+GlobalConfiguration.Configuration.Filters.Add(new MyTestCustomerStore.NotImplExceptionFilterAttribute());
+
+
+## How can we register exception filter from the action?
+
+We can register exception filter from action using following code:
+
+[NotImplExceptionFilter]
+public TestCustomer GetMyTestCustomer(int custid)
+{
+//write the code
+}
+
+
+## How you can return View from ASP.NET Web API method?
+
+No, we can’t return a view from ASP.NET Web API Method. Web API creates HTTP services that render raw data. 
+However, it’s also possible in ASP.NET MVC application.
+
+
+## How can you handle errors in Web API?
+
+Several classes are available in Web API to handle errors. 
+- HttpError,
+- HttpResponseException 
+- Exception Filters
+- Registering Exception Filters
+
+
+## How to unit test Web API?
+
+We can perform a Unit test using Web API tools like Fiddler.
+
+Here, are some setting to be done if you are using
+
+Fiddler –Compose Tab -> Enter Request Headers -> Enter the Request Body and execute
+
+
+## How can you restrict access methods to specific HTTP verbs in Web API?
+
+With the help of Attributes (like HTTP verbs), It is possible to implement access restrictions in Web API.
+
+It is possible to define HTTP verbs as an attribute to restrict access.
+
+Example:
+
+[HttpPost]
+public void Method1(Class obj)
+{
+//logic
+}
+
+
+## How Can We Provide an Alias Name for ASP.NET Web API Action?
+
+We can provide an alias name for ASP.NET Web API action same as in case of ASP.NET MVC by using "ActionName" attribute as follows:
+
+[HttpPost]
+[ActionName("SaveStudentInfo")]
+ public void UpdateStudent(Student aStudent)
+ {
+       StudentRepository.AddStudent(aStudent); 
+ }
+ 
+ 
+## What are the various return types in ASP.Net Web API?
+
+HttpResponseMessage
+IHttpActionResult
+void
+Other Type - string, int, or other entity types 
+
+
+## What's new in ASP.Net Web API 2.0?
+
+New features included in Web API 2 are -
+
+1. Attribute-based routing
+
+        [Route("product/{productid}/category")]
+        public string Get(int productid)
+        {
+            return "value";
+        }
+
+2. CORS (Cross-Origin Resource Sharing) support
+3. OWIN to Self Host Web API
+4. Web API OData
+
+
+## CORS issue in Web API?
+CORS stands for Cross-Origin Resource Sharing. CORS resolve the same-origin restriction for JavaScript. The same Origin means that a 
+JavaScript can only make AJAX call to the web pages within the same origin.
+
+To enable CORS in Web API you must install CORS nuget package using Package Manager Console.
+Now open WebAPIConfig.cs file
+
+add config.EnableCors();
+
+Then add EnableCors attribute to Controller class and define the origin
+
+[EnableCors(origins: "<origin url>", headers: "*", methods: "*")]
+
+
+## How to make sure that Web API returns data in JSON format only?
+
+To do this open "WebApiConfig.cs" file and add below line :
+
+config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"))
+
+
+## How to host Web API?
+
+Web API application can be hosted in 2 ways -
+
+1. Self Hosting - Web API can be hosted in Console Application or Windows Service.
+2. IIS Hosting - Web API can also be hosted with IIS and the process is similar to hosting a website.
+
+
+## How to Enable HTTPS in Web API?
+
+As you know ASP.Net Web API runs over HTTP protocol. Suppose you want to serve your Web API to be accessible only over 
+secure HTTP i.e. HTTPS and not over HTTP. To implement this you must use Filters.
+
+Create a class and inherit that class with AuthorizationFilterAttribute and then check if the requested url has HTTPS or not. 
+
+	public class HTTPSAttribute:AuthorizationFilterAttribute
+    {
+        public override void OnAuthorization(HttpActionContext actionContext)
+        {
+            if(actionContext.Request.RequestUri.Scheme != Uri.UriSchemeHttps)
+            {
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Found);
+                actionContext.Response.Content = new StringContent("<p>Use HTTPS only</p>");
+            }
+            base.OnAuthorization(actionContext);
+        }
+    }
+
+
+26. What is Token Based Authentication in Web API?
+Answer coming soon...
+27. How to implement Token Based Authentication in ASP.Net Web API?
+Answer coming soon...
+28. What is ASP.Net identity in Web API?
+Answer coming soon...
+29. How to use Bearer Token for Authenticating Web API?
+Answer coming soon...
+30. Explain oData with ASP.Net Web API.
+Answer coming soon...
+31. What is OWIN used for in Web API?
+Answer coming soon...
+	

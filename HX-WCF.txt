@@ -1,0 +1,233 @@
+##  Name the namespace that is used to access WCF service?
+
+	System.ServiceModel is used to access WCF service
+
+## What is the Difference between WCF and ASMX Web Services?
+
+	A simple and basic difference is that ASMX or ASP.NET web service is designed to send and receive messages using SOAP over HTTP only. 
+	While WCF can exchange messages using any format (SOAP is default) over any transport protocol (HTTP, TCP/IP, MSMQ, NamedPipes, etc).
+
+
+## What are WCF Service Endpoints? Explain.
+
+    Address : It defines " WHERE ". Address is the URL that identifies the location of the service.
+    Binding : It defines " HOW ". Binding defines how the service can be accessed.
+    Contract : It defines " WHAT ". Contract identifies what is exposed by the service.
+	
+	
+## List out the types of binding available in WCF?
+
+The types of binding available in WCF are
+
+    BasicHttpBinding
+    NetTcpBinding
+    WSHttpBinding
+    NetMsmqBinding
+	
+	
+## What are the Possible Ways of Hosting a WCF Service? Explain.
+
+
+    Hosting in a Managed Application/ Self Hosting
+        Console Application
+        Windows Application
+        Windows Service
+    
+	Hosting on Web Server
+        IIS 6.0 (ASP.NET Application supports only HTTP)
+        Windows Process Activation Service (WAS) i.e. IIS 7.0 supports HTTP, TCP, NamedPipes, MSMQ.
+		
+		
+## How Can We Achieve Operation Overloading While Exposing WCF Services?
+
+	By default, WSDL doesn’t support operation overloading. Overloading behavior can be achieved by using "Name" property of OperationContract attribute.	
+
+	[ServiceContract]
+	interface IMyCalculator
+	{
+		[OperationContract(Name = "SumInt")]
+		int Sum(int arg1,int arg2);
+
+		[OperationContract(Name = "SumDouble")]
+		double Sum(double arg1,double arg2);
+	}	
+
+	
+## What is DataContractSerializer and How is it Different from XmlSerializer?
+
+	Serialization is the process of converting an object instance to a portable and transferable format. 
+	So, whenever we are talking about web services, serialization is very important.
+
+	Windows Communication Foundation has DataContractSerializer that is new in .NET 3.0 and uses opt-in approach as compared to XmlSerializer that uses opt-out. 
+	Opt-in means specify whatever we want to serialize while Opt-out means you don’t have to specify each and every property to serialize, specify only those 
+	you don’t want to serialize. 
+	
+	DataContractSerializer is about 10% faster than XmlSerializer but it has almost no control over how the object will be serialized. 
+	If we wanted to have more control over how object should be serialized, then XmlSerializer is a better choice.	
+	
+## Which Standard Binding could be used for a Service that was Designed to Replace an Existing ASMX Web Service?
+
+	The basicHttpBinding standard binding is designed to expose a service as if it is an ASMX/ASP.NET web service. 
+	This will enable us to support existing clients as applications are upgrade to WCF.	
+	
+	
+## Please Explain Different Modes of Security in WCF?
+
+	1. Transport Level security means providing security at the transport layer itself. 
+	When dealing with security at Transport level, we are concerned about integrity, privacy and authentication of message as it travels along the physical wire.
+	It depends on the binding being used how WCF makes it secure because most of the bindings have built-in security. 	
+	
+	<netTcpBinding>
+	<binding name="netTcpTransportBinding">
+    <security mode="Transport">
+        <Transport clientCredentialType="Windows" />
+    </security>
+	</binding>
+	</netTcpBinding>
+	
+	2. Message Level Security For Transport level security, we actually ensure the transport that is being used should be secured 
+	but in message level security, we actually secure the message. We encrypt the message before transporting it. 
+	
+	<wsHttpBinding>
+	<binding name="wsHttpMessageBinding">
+    <security mode="Message">
+        <Message clientCredentialType="UserName" />
+    </security>
+	</binding>
+	</wsHttpBinding>
+
+
+## Make the service as RESTful?
+
+	With WebGet or WebInvoke to make the service as RESTful. 
+	
+	Notice following attributes for WebGet or WebInvoke
+
+    1.UriTemplate: The corresponding Operation will be served with matching Uri.
+    2.RequestFormat: Tells the format of request is XML or JSON.
+    3.ResponseFormat: Tells the format of response is XML or JSON
+    4.Method: WebInvoke has the Method attribute. The value for this could be PUT, POST, DELETE. 
+	WebGet does not have this attribute as it is used only for http verb GET.
+
+	
+## Using JSON ?
+
+    RequestFormat: By default its value is WebMessageFormat.XML. to change it to JSON format, it needs to be set to WebMessageFormat.Json.
+    ResponseFormat: By default its value is WebMessageFormat.XML. to change it to JSON format, it needs to be set to WebMessageFormat.Json.
+	
+		[OperationContract]
+		[WebGet(ResponseFormat=WebMessageFormat.Json]
+		List<string> GetBooksNames();
+
+		
+## Contracts?
+
+The following are the contracts are available in WCF:
+
+    Service contracts
+    Data Contracts
+    Message contracts
+    Fault Contract
+    Operation Contract 	
+	
+	1) Service contracts
+
+	Service contracts define the Interface for the service. It can be defined as follows.
+
+	[ServiceContract]    
+	interface ICustomer    
+	{    
+	  
+	}
+
+	2) Operation Contract
+
+	An Operation Contract defines the method exposed to the client to exchange the information between the client and server. 
+	An Operation Contract describes what functionality is to be given to the client, such as addition, subtraction and so on.	
+	
+	[ServiceContract]    
+	interface ICustomer    
+	{    
+		[OperationContract]    
+		Response AddNew(string customername);    
+		Response Delete(int customerID);    
+	}
+	
+	Note : In the preceding Example the clients will not be able to call the function name delete because the delete function has not used the Operation Contract.
+	
+	3) Data Contract 
+	
+	Data Contracts define the data type for variables that are the same as get and set properties but the difference is that a Data Contract in WCF 
+	is used to serialize and deserialize the complex data.
+	
+	4) Data Member
+	
+	This declares and defines properties inside a class, the property that doesn't use a Data Member tag will not be serialized or deserialized.
+	
+	[DataContract]    
+	public class Customer    
+	{    
+		[DataMember]    
+		public int ID { get; set; }   
+		
+		[DataMember]    
+		public string Name { get; set; }    
+        public string ContactNo { get; set; }    
+	}
+
+	Note : In the preceding example the ContactNo property will not be given access to the client because it will not be serialized or deserialized 
+	though it is not used as a Data Member attribute. 
+
+	5) Fault Contracts	
+	
+	In a simple WCF Service, errors/exceptions can be passed to the Client (WCF Service Consumer) using FaultContract. 
+	
+	[ServiceContract]    
+	public interface IService1    
+	{    
+		[OperationContract]    
+		[FaultContract(typeof(ServiceData))]    
+		ServiceData TestConnection(string strConnectionString);    
+	}
+	
+	6) Message Contract
+	
+	 When an operation contract required to pass a message as a parameter or return value as a message, the type of this message will be defined 
+	 as message contract. A message contract defines the elements of the message (like as Message Header, Message Body), as well as the message-related 
+	 settings, such as the level of message security.
+
+	Message contracts give you complete control over the content of the SOAP header, as well as the structure of the SOAP body.
+	
+	[MessageContract]
+	public class PriceCalculate
+	{
+		[MessageHeader]
+		public MyHeader SoapHeader { get; set; }
+		[MessageBodyMember]
+		public PriceCal PriceCalculation { get; set; }
+	}
+	
+	
+## 	WCF Test Client?
+
+	WCF Test Client is a debugging tool for WCF services. Those who are not interested in creating a Console application or a website to 
+	test the service can use this tool. Using this tool we can test a single service or multiple services. We can also open multiple instances of the tool.
+	
+	
+## WCF Error Handling?
+
+	Fault Contracts
+	IErrorHandler	
+	
+	
+## What are the transport schemas does WCF supports?
+
+It supports
+
+    HTTP
+    TCP
+    Peer network
+    IPC ( Inter Process Communication)
+    MSMQ
+	
+

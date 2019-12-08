@@ -1,0 +1,508 @@
+
+
+Question : Reset identity
+Answer : 
+	
+	DBCC CHECKIDENT ('[TestTable]', RESEED, 0);
+	GO
+
+
+Question : Write a SQL query to fetch duplicate records from a table
+Answer : 
+
+	SELECR EMPID,EMPNAME,COUNT(*)
+	FROM EMPLOYEE
+	GROUP BY EMPID,EMPNAME
+	HAVING COUNT(*) > 1
+	
+
+Question : Write a SQL query to remove duplicates from a table without using temporary table.
+Answer :
+	
+	rowid		Value
+	1		AA
+	2		BB	
+	3		AA
+	4		CC
+
+	
+	Delete From TableB 
+	Where rowid not in (
+		Select max(rowid) From TableB 
+		Group By Value 
+	) 
+
+
+	With EmployeeCTE AS 
+	(
+		Select *, Row_Number() over (Partition By rowid Order By rowid) as rownumber
+		From Employee
+	)
+
+	Delete From EmployeeCTE Where rownumber > 1
+
+
+Question : Write a SQL query to create a new table with data and structure copied from another table.
+Answer : 
+
+	With Data :
+			Select * into employee_backup 
+			From Employee
+
+	Without Data :
+			Select * Into employee_backup
+			From Employee Where 1=0
+
+
+Question : Write a SQL query to fetch common records between two tables. 
+Answer : Using INTERSECT
+
+	  Select * from Permanent_employee
+	  INTERSECT
+	  Select * From Contract_employee
+
+
+Question : Write SQL query to find the nth highest salary from table.
+Answer : 
+	  Select Salary From employee
+	  Order By Salary Desc
+	  LIMIT n-1, 1 
+
+
+Question : Write an SQL query to print the first three characters of  FIRST_NAME from Worker table.
+Answer : 
+	  Select Substring(EmployeeName,1,3) From Employee;
+
+
+Question : Write an SQL query to find the position of the alphabet (‘t’) in the first name column ‘Amitabh’ from Worker table.
+Answer : 
+	  Select CHARINDEX('t','Amitabh') FROM 
+
+
+Question : Write an SQL query to print the FIRST_NAME from Worker table after removing white spaces from the right side.
+Answer : 
+	  Select RTRIM(FIRST_NAME) from Worker
+
+Question : Write an SQL query to print the DEPARTMENT from Worker table after removing white spaces from the left side.
+Answer :
+	  Select LTRIM(DEPARTMENT) from Worker
+	
+
+Question : Write an SQL query to show only odd rows from a table.
+Answer :  Select * From Worker Where MOD(Worker_id,2) <> 0
+
+
+Question : Write an SQL query to show only even rows from a table.
+Answer :  Select * From Worker Where MOD(Worker_id,2) = 0
+
+
+Question : How to select random rows from a table?
+Answer : 
+	  Select * From Worker
+	  Order By NewID()
+	  GO	
+
+
+Question : There are 5 major constraints are used in SQL, such as
+
+    NOT NULL: That indicates that the column must have some value and cannot be left null
+    UNIQUE: This constraint is used to ensure that each row and column has unique value and no value is being repeated in any other row or column
+    PRIMARY KEY: This constraint is used in association with NOT NULL and UNIQUE constraints such as on one or the combination of more than one columns to identify the particular record with a unique identity.
+    FOREIGN KEY: It is used to ensure the referential integrity of data in the table and also matches the value in one table with another using Primary Key
+    CHECK: It is used to ensure whether the value in columns fulfills the specified condition
+
+
+Question : CTE ?
+Answer : A CTE or common table expression is an expression which contains temporary result set which is defined in a SQL statement.
+
+		WITH Employee_CTE (EmployeeNumber, Title)
+		AS
+		(
+			SELECT NationalIDNumber, JobTitle
+			FROM   Employee
+		)
+		SELECT EmployeeNumber,Title
+		FROM   Employee_CTE
+
+
+Question : What are the properties of a transaction?
+Answer : 
+	Generally, these properties are referred to as ACID properties. They are:
+
+    		- Atomicity
+    		- Consistency
+    		- Isolation
+    		- Durability.	
+
+
+Question : What is a Cursor?
+Answer : 
+	A cursor is a database object which is used to manipulate data in a row-to-row manner.
+
+	Cursor follows steps as given below
+
+	- Declare Cursor
+    	- Open Cursor
+    	- Retrieve row from the Cursor
+    	- Process the row
+    	- Close Cursor
+    	- Deallocate Cursor
+
+
+Question : What is Normalization? How many Normalization forms are there?
+Answer : 
+	Normalization is used to organize the data in such manner that data redundancy will never occur in the database and avoid insert, update 
+	and delete anomalies.
+
+	There are 5 forms of Normalization
+
+    	First Normal Form (1NF): It removes all duplicate columns from the table. Creates a table for related data and identifies unique column values
+    	First Normal Form (2NF): Follows 1NF and creates and places data subsets in an individual table and defines the relationship between tables using the 
+				 primary key
+    	Third Normal Form (3NF): Follows 2NF and removes those columns which are not related through primary key
+    	Fourth Normal Form (4NF): Follows 3NF and do not define multi-valued dependencies. 4NF also known as BCNF
+
+
+Question : What is the Cartesian product of table?
+Answer : 
+	The output of Cross Join is called as a Cartesian product. It returns rows combining each row from the first table with each row of the second table. 
+ 	For Example, if we join two tables having 15 and 20 columns the Cartesian product of two tables will be 15×20=300 Rows.
+
+
+Question : What is Self-Join?
+Answer : Self-join is set to be query used to compare to itself. 
+
+
+Question : What are transaction and its controls?
+Answer :
+	In simple word, we can say that a transaction means a group of SQL queries executed on database records.
+
+	There are 4 transaction controls such as
+
+    	COMMIT: It is used to save all changes made through the transaction
+    	ROLLBACK: It is used to roll back the transaction such as all changes made by the transaction are reverted back and database remains as before
+    	SET TRANSACTION: Set the name of transaction
+    	SAVEPOINT: It is used to set the point from where the transaction is to be rolled back
+
+
+Question : What is a View?
+Answer :
+A view is a virtual table which consists of a subset of data contained in a table. 
+Views are not virtually present, and it takes less space to store. View can have data of one or more tables combined, 
+and it is depending on the relationship. 
+
+
+Question : What is subquery?
+Answer : A subquery is a query within another query. The outer query is called as main query, and inner query is called subquery. 
+	SubQuery is always executed first, and the result of subquery is passed on to the main query. 
+
+
+
+Question : What is the difference between DELETE and TRUNCATE commands?
+Answer :
++----------------------------------------+----------------------------------------------+
+|                Truncate                |                    Delete                    |
++----------------------------------------+----------------------------------------------+
+| We can't Rollback after performing     | We can Rollback after delete.                |
+| Truncate.                              |                                              |
+|                                        |                                              |
+| Example:                               | Example:                                     |
+| BEGIN TRAN                             | BEGIN TRAN                                   |
+| TRUNCATE TABLE tranTest                | DELETE FROM tranTest                         |
+| SELECT * FROM tranTest                 | SELECT * FROM tranTest                       |
+| ROLLBACK                               | ROLLBACK                                     |
+| SELECT * FROM tranTest                 | SELECT * FROM tranTest                       |
++----------------------------------------+----------------------------------------------+
+| Truncate reset identity of table.      | Delete does not reset identity of table.     |
++----------------------------------------+----------------------------------------------+
+| It locks the entire table.             | It locks the table row.                      |
++----------------------------------------+----------------------------------------------+
+| Its DDL(Data Definition Language)      | Its DML(Data Manipulation Language)          |
+| command.                               | command.                                     |
++----------------------------------------+----------------------------------------------+
+| We can't use WHERE clause with it.     | We can use WHERE to filter data to delete.   |
++----------------------------------------+----------------------------------------------+
+| Trigger is not fired while truncate.   | Trigger is fired.                            |
++----------------------------------------+----------------------------------------------+
+| Syntax :                               | Syntax :                                     |
+| 1) TRUNCATE TABLE table_name           | 1) DELETE FROM table_name                    |
+|                                        | 2) DELETE FROM table_name WHERE              |
+|                                        |    example_column_id IN (1,2,3)              |
++----------------------------------------+----------------------------------------------+
+
+
+Question : SQL - having VS where ?
+Answer :
+
+	The main difference between WHERE and HAVING clause in SQL is that, condition specified in WHERE clause is used while fetching data (rows) from table, and 
+	data which doesn't pass the condition will not be fetched into result set, on the other hand HAVING clause is later used to filter summarized data or 
+	grouped data. 
+
+
+	First we should know the order of execution of Clauses i.e FROM > WHERE > GROUP BY > HAVING > DISTINCT > SELECT > ORDER BY. 
+	Since WHERE Clause gets executed before GROUP BY Clause the records cannot be filtered by applying WHERE to a GROUP BY applied records.
+
+	"HAVING is same as the WHERE clause but is applied on grouped records".
+
+	first the WHERE clause fetches the records based on the condition then the GROUP BY clause groups them accordingly and 
+	then the HAVING clause fetches the group records based on the having condition.
+
+
+Question : SQL - COMPOSITE KEY ?
+Answer : A composite key is a combination of two or more columns in a table that can be used to uniquely identify each row in the table.
+
+	Composite key, or composite primary key, refers to cases where more than one column is used to specify the primary key of a table. 
+	In such cases, all foreign keys will also need to include all the columns in the composite key.
+
+
+Question : What is the difference between candidate key and composite key?
+Answer : 
+	Candidate key : The column using which you can uniquely identify single row in table.
+	--------------
+	For example table has 4 columns
+
+	Aadhar card no
+	Mobile no
+	Name
+	Age
+	
+	So here using Aadhar card no & mobile no, you can uniquely find name of person.
+
+	So Aadhar card no and mobile no both are candidate keys.
+
+	It's upto designer, which one of this two can be primary key.
+
+	Composite key : when table don't have any column which is not capable of getting unique row then we might need more than 2 columns to get unique row. Then it's called composite key.
+	--------------
+	For class student table with below 2 columns :
+
+	First name
+	Last name
+
+
+Question : SQL Triggers?
+Answer : 
+	A trigger is a special kind of Stored Procedure or stored program that is automatically fired or executed when some event (insert, delete and update) occurs.
+
+	::: Types of Triggers ::::
+ 
+	In SQL Server we can create the following 3 types of triggers:
+
+	1. Data Definition Language (DDL) triggers
+	2. Data Manipulation Language (DML) triggers
+	3. Logon triggers
+
+	
+	DDL Triggers
+ 	------------
+	In SQL Server we can create triggers on DDL statements (like CREATE, ALTER and DROP) and certain system-defined Stored Procedures 
+	that does DDL-like operations.
+
+	DML Triggers
+	------------
+	1. After trigger (using FOR/AFTER CLAUSE)
+ 	----------------------------------------
+	The After trigger (using the FOR/AFTER CLAUSE) fires after SQL Server finishes the execution of the action successfully that fired it.
+ 
+	Example: If you insert a record/row into a table then the trigger related/associated with the insert event on this table will fire only after 
+	the row passes all the constraints, such as primary key constraint and some rules. If the record/row insertion fails, SQL Server will not fire 
+	the After Trigger.
+
+	2. Instead of Trigger (using INSTEAD OF CLAUSE)
+ 	-----------------------------------------------
+	The Instead of Trigger (using the INSTEAD OF CLAUSE) fires before SQL Server starts the execution of the action that fired it. This is different 
+	from the AFTER trigger that fires after the action that caused it to fire. We can have an INSTEAD OF insert/update/delete trigger on a table that 
+	successfully executed but does not include the actual insert/update/delete to the table.
+ 
+	Example: If you insert a record/row into a table then the trigger related/associated with the insert event on this table will fire before the row 
+	passes all the constraints, such as primary key constraint and some rules. If the record/row insertion fails, SQL Server will fire the Instead of Trigger.
+
+	3. Logon Triggers
+	----------------- 
+	Logon triggers are a special type of triggers that fire when a LOGON event of SQL Server is raised. This event is raised when a user session is being 
+	established with SQL Server that is made after the authentication phase finishes, but before the user session is actually established. 
+	Hence, all messages that we define in the trigger, such as error messages, will be redirected to the SQL Server error log. Logon triggers do not fire 
+	if authentication fails. We can use these triggers to audit and control server sessions, such as to track login activity or limit the number of sessions 
+	for a specific login.
+
+
+
+
+IMP : Both Clustered and Non-Clustered indexes use B-Tree data structure to improve the search for data.
+
+Question: Covering Indexes? #####
+Answer : A Covering Index is a Non-Clustered index.
+
+	 A covered query is a query where all the columns in the query's result set are pulled from non-clustered indexes.
+
+	 A covering index is an index which is used in a covered query. 
+
+For example:::
+
+PersonID 	ParentID 	Name
+1        	NULL     	Abe
+2        	NULL     	Bob
+3        	1        	Carl
+4        	2        	Dave
+
+	Let's assume there's an index on PersonID, ParentID, Name - this would be a covering index for a query like:
+
+SELECT PersonID, ParentID, Name FROM MyTable
+
+
+
+Question: Functions in SQL?
+Answer : 
+	- Functions only work with select statements.
+	- Functions compile every time.
+	- Functions must return a value or result.
+	- Functions only work with input parameters.
+	- Try and catch statements are not used in functions.
+
+SQL Server Function Types ::
+
+	(A) User Defined function: User defined functions are create by a user.
+	(B) System Defined Function: System functions are built in database functions. 
+
+
+	#User Defined Functions ::
+ 		SQL Server support two types of user defined functions:
+		(i)  Table Valued Functions
+        	(ii) Scalar Valued Functions
+
+		Table Valued Functions : In this type of function, we select a table data using a user created function. A function is created using 
+		----------------------	 the Create function SQL command. The following query creates a new user defined function.
+
+					Create function Fun_EmployeeInformation()      
+					returns table       
+					as      
+					return(select * from Employee)
+
+		Scalar function : The user-defined scalar function returns a single value as a result of actions performed by the function. 
+		----------------  Here create a two-column join function as in the following:
+
+					create function fun_JoinEmpColumnInfo  
+					(  
+  					 	@EmpContact nchar(15),  
+  					 	@EmpEmail nvarchar(50),  
+  					 	@EmpCity varchar(30)  
+					)  
+					returns nvarchar(100)  
+					as  
+					begin return(select @EmpContact+ ' ' +@EmpEmail + ' ' + @EmpCity)  
+					end 
+		
+
+	#System Defined Function ::
+		(i)  Scalar Function
+		(ii) Aggregate Function
+
+	Scalar Function : Scalar functions operate on a single value and return a single value. Below is the list of some useful SQL Server Scalar functions.
+	-----------------
+			rand(10)		This will generate a random number of 10 characters.
+			round(17.56719,3)	This will round off the given number to 3 places of decimal means 17.567
+			upper('dotnet')		This will returns the upper case of given string means 'DOTNET'
+			lower('DOTNET')		This will returns the lower case of given string means 'dotnet'
+			ltrim(' dotnet')	This will remove the spaces from the left-hand side of 'dotnet' string.
+
+
+	Aggregate Function : Aggregate functions operate on a collection of values and return a single value. Below is the list of some useful SQL Server Aggregate functions.
+	--------------------
+		AVG – calculates the average of a set of values.
+		COUNT – counts rows in a specified table or view.
+		MIN – gets the minimum value in a set of values.
+		MAX – gets the maximum value in a set of values.
+		SUM – calculates the sum of values.
+
+
+
+
+
+Note:::
+
+Unlike Stored Procedure, Function returns an only single value.
+
+Unlike Stored Procedure, Function accepts only input parameters.
+
+Unlike Stored Procedure, Function is not used to Insert, Update, Delete data in a database table(s).
+
+Like Stored Procedure, Function can be nested up to 32 levels.
+
+User Defined Function can have upto 1023 input parameters while a Stored Procedure can have upto 2100 input parameters.
+
+User Defined Function can't return XML Data Type.
+
+User Defined Function doesn't support Exception handling.
+
+User Defined Function can call only Extended Stored Procedure.
+
+User Defined Function doesn't support set options like set ROWCOUNT etc.
+
+
+
+Question : What is data Integrity?
+Answer : Data Integrity defines the accuracy and consistency of data stored in a database. 
+
+
+
+Question : What is collation?
+Answer : Collation is defined as set of rules that determine how character data can be sorted and compared. 
+
+	This can be used to compare A and, other language characters and also depends on the width of the characters.
+
+	ASCII value can be used to compare these character data. 
+
+
+
+Question : What is recursive stored procedure?
+Answer : A stored procedure which calls by itself until it reaches some boundary condition. 
+	This recursive function or procedure helps programmers to use the same set of code any number of times. 
+
+
+
+Question : What is Union?
+Answer :UNION operator is used to combine the results of two tables, and it eliminates duplicate rows from the tables.
+
+
+
+Question : What is COALESCE in SQL Server?
+Answer :
+COALESCE is used to return first non-null expression within the arguments. This function is used to return a non-null from more than one column in the arguments.
+
+Example – Select COALESCE(empno, empname, salary) from employee;
+
+
+Question : What are Magic Tables in SQL Server?
+Answer :
+Insert and Delete tables are created when the trigger is fired for any DML command. Those tables are called Magic Tables in SQL Server. 
+These magic tables are used inside the triggers for data transaction.
+
+
+
+Question : Temporary tables VS Table variables ?
+Answer : 
+	1. Temporary tables (#) are allowed CREATE INDEXes whereas, Table variables "@" aren’t allowed CREATE INDEX instead they can have index by 
+	using Primary Key or Unique Constraint. 
+
+	2. Table variables cannot be involved in transactions, logging or locking. This makes @table faster then #temp. 
+	So table variable is faster then temporary table.
+
+	3. Temporary table allows Schema modifications unlike Table variables.
+
+
+01 - Local Temp Table
+Local temp tables are only available to the SQL Server session or connection (means single user) that created the tables. 
+The local temporary table name is stared with a single hash ("#") sign.
+
+
+02 - Global Temp Table
+Global temp tables are available to all SQL Server sessions or connections (means all the user). 
+The global temporary table name is stared with double hash ("##") sign.
+
+Global temporary tables are visible to all SQL Server connections while Local temporary tables are visible to only current SQL Server connection.
+
+03 - Table Variable
+This acts like a variable and exists for a particular batch of query execution. It gets dropped once it comes out of the batch. 
+This also allows you to create a primary key, identity at the time of Table variable declaration but not non-clustered index.
+
+
